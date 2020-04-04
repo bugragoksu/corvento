@@ -105,4 +105,20 @@ class FirebaseAPI {
     print(categories.toString());
     return categories;
   }
+
+  Future<List<Event>> getEventsByCategory(String category) async {
+    List<Event> events = List<Event>();
+    await _db
+        .collection("events")
+        .where("category", isEqualTo: category)
+        .getDocuments()
+        .then((event) {
+      event.documents.forEach((element) {
+        if (element.data != null) {
+          events.add(Event.fromFirestore(element));
+        }
+      });
+    });
+    return events;
+  }
 }

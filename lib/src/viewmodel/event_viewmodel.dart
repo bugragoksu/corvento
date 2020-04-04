@@ -13,9 +13,11 @@ class EventViewModel with ChangeNotifier {
   EventState _state;
   EventRepository _repository = EventRepository();
   List<Event> eventList;
+  List<Event> eventListByCategory;
 
   EventViewModel() {
     eventList = List<Event>();
+    eventListByCategory = List<Event>();
     _state = EventState.InitialEventState;
     getAllEvents();
   }
@@ -49,5 +51,17 @@ class EventViewModel with ChangeNotifier {
       state = EventState.EventErrorState;
     }
     return eventList;
+  }
+
+  Future<List<Event>> getEventsByCategory(String category) async {
+    try {
+      state = EventState.EventLoadingState;
+      eventListByCategory.clear();
+      eventListByCategory = await _repository.getEventsByCategory(category);
+      state = EventState.EventLoadedState;
+    } catch (e) {
+      state = EventState.EventErrorState;
+    }
+    return eventListByCategory;
   }
 }

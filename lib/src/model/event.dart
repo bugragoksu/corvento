@@ -20,7 +20,7 @@ class Event {
       this.date,
       this.eventUrl,
       this.imageUrl,
-      this.venue,
+      this.venue, 
       this.author});
 
   factory Event.fromFirestore(DocumentSnapshot doc) {

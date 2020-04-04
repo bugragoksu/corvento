@@ -19,4 +19,8 @@ class EventRepository {
   Future<List<Event>> searchFeaturedEvents(String text) async {
     return await _api.featuredSearch(text);
   }
+
+  Future<List<Event>> getEventsByCategory(String category) async {
+    return await _api.getEventsByCategory(category);
+  }
 }
