@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:eventapp/src/viewmodel/event_viewmodel.dart';
+import 'package:eventapp/src/viewmodel/category_viewmodel.dart';
 import 'package:eventapp/src/viewmodel/featured_event_viewmodel.dart';
 import 'locator.dart';
 
 void main() {
-  setupLocator();
+  //setupLocator();
   runApp(MyApp());
 }
 
@@ -24,7 +25,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<FeaturedEventViewModel>(
           create: (context) => FeaturedEventViewModel(),
-        )
+        ),
+        ChangeNotifierProvider<CategoryViewModel>(
+          create: (context) => CategoryViewModel(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
