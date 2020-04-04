@@ -120,7 +120,7 @@ class HomePage extends StatelessWidget {
 
   AppBar buildAppBar(context) => AppBar(
         title: Text(
-          "Event App",
+          "Evento",
         ),
         elevation: 0,
         backgroundColor: appColor,

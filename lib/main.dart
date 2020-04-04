@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Event List',
+        title: 'Evento',
         theme: ThemeData(
             primarySwatch: Colors.blue,
             textTheme: Theme.of(context).textTheme.apply()),
