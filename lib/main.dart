@@ -5,9 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:eventapp/src/viewmodel/event_viewmodel.dart';
 import 'package:eventapp/src/viewmodel/category_viewmodel.dart';
 import 'package:eventapp/src/viewmodel/featured_event_viewmodel.dart';
-import 'locator.dart';
 
-void main() {
+void main() async {
   //setupLocator();
   runApp(MyApp());
 }

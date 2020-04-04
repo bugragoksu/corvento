@@ -1,21 +1,48 @@
 import 'package:eventapp/src/model/event.dart';
+import 'package:eventapp/src/services/local/sharedpref_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class FeaturedEventCard extends StatelessWidget {
+class FeaturedEventCard extends StatefulWidget {
   final Event e;
 
   FeaturedEventCard({@required this.e});
 
   @override
+  _FeaturedEventCardState createState() => _FeaturedEventCardState();
+}
+
+class _FeaturedEventCardState extends State<FeaturedEventCard> {
+  bool isSaved;
+  @override
+  void initState() {
+    isSaved = false;
+    super.initState();
+  }
+
+  clickedBookmars() async {
+    var sp = SharedPrefManager();
+    if (!isSaved) {
+      //ekle
+
+      sp.addBookMarkEvents(widget.e.id);
+    } else {
+      sp.deleteEvent(widget.e.id);
+    }
+    setState(() {
+      isSaved = !isSaved;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (e == null) {
+    if (widget.e == null) {
       return CircularProgressIndicator();
     }
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, "/eventDetailPage", arguments: e);
+        Navigator.pushNamed(context, "/eventDetailPage", arguments: widget.e);
       },
       child: Card(
         elevation: 0,
@@ -35,7 +62,7 @@ class FeaturedEventCard extends StatelessWidget {
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: Image.network(
-                          e.imageUrl,
+                          widget.e.imageUrl,
                           fit: BoxFit.fill,
                         )),
                   ),
@@ -54,12 +81,20 @@ class FeaturedEventCard extends StatelessWidget {
                           color: Colors.yellowAccent.shade700,
                           elevation: 0,
                           child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                FontAwesomeIcons.bookmark,
-                                color: Colors.black,
-                                size: 20,
-                              ))),
+                              onPressed: () {
+                                clickedBookmars();
+                              },
+                              icon: isSaved
+                                  ? Icon(
+                                      FontAwesomeIcons.solidBookmark,
+                                      color: Colors.black,
+                                      size: 20,
+                                    )
+                                  : Icon(
+                                      FontAwesomeIcons.bookmark,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ))),
                     ),
                   ),
                 ],
@@ -73,7 +108,7 @@ class FeaturedEventCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Text(e.title,
+                  Text(widget.e.title,
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   Spacer(),
@@ -83,7 +118,7 @@ class FeaturedEventCard extends StatelessWidget {
                     color: Colors.yellowAccent.shade700,
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
-                      child: Text(e.category,
+                      child: Text(widget.e.category,
                           style: TextStyle(
                             fontSize: 14,
                           )),
@@ -97,13 +132,13 @@ class FeaturedEventCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Text(e.venue,
+                  Text(widget.e.venue,
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                   SizedBox(
                     width: 20,
                   ),
-                  Text(e.getTime(),
+                  Text(widget.e.getTime(),
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 ],
@@ -126,11 +161,11 @@ class FeaturedEventCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              e.getDayNumber(),
+              widget.e.getDayNumber(),
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             Text(
-              e.getMonthName(),
+              widget.e.getMonthName(),
               style: TextStyle(color: Colors.black, fontSize: 14),
             ),
           ],
