@@ -14,20 +14,27 @@ class FeaturedEventCard extends StatefulWidget {
 
 class _FeaturedEventCardState extends State<FeaturedEventCard> {
   bool isSaved;
+  SharedPrefManager prefManager;
   @override
   void initState() {
+    prefManager = SharedPrefManager();
     isSaved = false;
+    isMarked();
     super.initState();
   }
 
+  isMarked() async {
+     isSaved = await prefManager.isMarked(widget.e.id);
+    setState(() {});
+  }
+
   clickedBookmars() async {
-    var sp = SharedPrefManager();
     if (!isSaved) {
       //ekle
 
-      sp.addBookMarkEvents(widget.e.id);
+      prefManager.addBookMarkEvents(widget.e.id);
     } else {
-      sp.deleteEvent(widget.e.id);
+      prefManager.deleteEvent(widget.e.id);
     }
     setState(() {
       isSaved = !isSaved;
