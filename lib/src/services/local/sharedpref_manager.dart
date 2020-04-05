@@ -60,4 +60,9 @@ class SharedPrefManager {
       return false;
     }
   }
+
+  Future<List<String>> getBookmarkedEventList() async {
+    String events = await getBookMarksEvents();
+    return events.split(',');
+  }
 }
