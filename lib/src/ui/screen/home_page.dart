@@ -1,6 +1,6 @@
 import 'package:eventapp/src/config/constant.dart';
-import 'package:eventapp/src/ui/widget/featuredEventCard.dart';
-import 'package:eventapp/src/ui/widget/upcomingEventCard.dart';
+import 'package:eventapp/src/ui/widget/featured_event_card.dart';
+import 'package:eventapp/src/ui/widget/upcoming_event_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';

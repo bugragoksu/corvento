@@ -1,5 +1,5 @@
 import 'package:eventapp/src/config/constant.dart';
-import 'package:eventapp/src/ui/widget/upcomingEventCard.dart';
+import 'package:eventapp/src/ui/widget/upcoming_event_card.dart';
 import 'package:eventapp/src/viewmodel/event_viewmodel.dart';
 import 'package:eventapp/src/viewmodel/featured_event_viewmodel.dart';
 import 'package:flutter/material.dart';
