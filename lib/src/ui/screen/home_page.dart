@@ -1,4 +1,5 @@
 import 'package:eventapp/src/config/constant.dart';
+import 'package:eventapp/src/services/local/sharedpref_manager.dart';
 import 'package:eventapp/src/ui/widget/featured_event_card.dart';
 import 'package:eventapp/src/ui/widget/upcoming_event_card.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,12 @@ import 'package:eventapp/src/viewmodel/featured_event_viewmodel.dart';
 class HomePage extends StatelessWidget {
   EventViewModel _eventViewModel;
   FeaturedEventViewModel _featuredEventViewModel;
+  SharedPrefManager pf = SharedPrefManager();
   @override
   Widget build(BuildContext context) {
     _eventViewModel = Provider.of<EventViewModel>(context);
     _featuredEventViewModel = Provider.of<FeaturedEventViewModel>(context);
+
     return Scaffold(
       backgroundColor: appColor,
       appBar: buildAppBar(context),
@@ -85,8 +88,10 @@ class HomePage extends StatelessWidget {
 
   BottomNavigationBar buildBottomNavigationBar(context) {
     return BottomNavigationBar(
-      onTap: (index) {
+      onTap: (index) async {
         if (index == 1) {
+          var events = await pf.getBookmarkedEventList();
+          _eventViewModel.getBookmarkedEvents(events);
           Navigator.pushNamed(context, "/bookmarkPage");
         } else if (index == 2) {
           Navigator.pushNamed(context, "/notificationPage");
