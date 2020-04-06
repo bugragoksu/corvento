@@ -1,7 +1,7 @@
 import 'package:eventapp/src/config/constant.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -101,7 +101,7 @@ class LoginPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0)),
                   child: Text(
-                    "Giriş Yap",
+                    "Kayıt Ol",
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -120,9 +120,12 @@ class LoginPage extends StatelessWidget {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/login", (Route<dynamic> route) => false);
+                  },
                   child: Text(
-                    "Hesabın yok mu? Kayıt Ol",
+                    "Zaten kayıtlı mısın? Giriş Yap",
                     style: TextStyle(color: Colors.white),
                   ),
                 )

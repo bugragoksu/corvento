@@ -1,5 +1,6 @@
 import 'package:eventapp/src/model/event.dart';
-import 'package:eventapp/src/ui/screen/auth/login.dart';
+import 'package:eventapp/src/ui/screen/auth/login_page.dart';
+import 'package:eventapp/src/ui/screen/auth/register_page.dart';
 import 'package:eventapp/src/ui/screen/bookmarks_page.dart';
 import 'package:eventapp/src/ui/screen/category_page.dart';
 import 'package:eventapp/src/ui/screen/event_detail_page.dart';
@@ -33,6 +34,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => EventByCategoryPage());
       case '/login':
         return MaterialPageRoute(builder: (_) => LoginPage());
+      case '/register':
+        return MaterialPageRoute(builder: (_) => RegisterPage());
 
       default:
         return MaterialPageRoute(
