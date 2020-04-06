@@ -121,4 +121,16 @@ class FirebaseAPI {
     });
     return events;
   }
+
+  Future<List<Event>> getBookmarkedEvents(List<String> events) async {
+    List<Event> eventList = List<Event>();
+    for (var event in events) {
+      await _db.collection("events").document(event).get().then((value) {
+        if (value.data != null) {
+          eventList.add(Event.fromFirestore(value));
+        }
+      });
+    }
+    return eventList;
+  }
 }

@@ -23,4 +23,8 @@ class EventRepository {
   Future<List<Event>> getEventsByCategory(String category) async {
     return await _api.getEventsByCategory(category);
   }
+
+  Future<List<Event>> getBookmarkedEvents(List<String> events) async {
+    return await _api.getBookmarkedEvents(events);
+  }
 }
