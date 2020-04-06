@@ -229,15 +229,7 @@ class EventDetailPage extends StatelessWidget {
                                   color: Colors.yellow.shade700,
                                   height: 40,
                                   minWidth: double.infinity,
-                                  onPressed: () async {
-                                    await Firestore.instance
-                                        .collection("events")
-                                        .where("title",
-                                            arrayContainsAny: ["name", "buğra"])
-                                        .getDocuments()
-                                        .then((value) =>
-                                            print(value.documents.isEmpty));
-                                  },
+                                  onPressed: () async {},
                                 ),
                               ),
                             ),
