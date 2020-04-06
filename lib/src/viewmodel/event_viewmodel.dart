@@ -14,10 +14,12 @@ class EventViewModel with ChangeNotifier {
   EventRepository _repository = EventRepository();
   List<Event> eventList;
   List<Event> eventListByCategory;
+  List<Event> bookmarkedEventList;
 
   EventViewModel() {
     eventList = List<Event>();
     eventListByCategory = List<Event>();
+    bookmarkedEventList = List<Event>();
     _state = EventState.InitialEventState;
     getAllEvents();
   }
@@ -63,5 +65,17 @@ class EventViewModel with ChangeNotifier {
       state = EventState.EventErrorState;
     }
     return eventListByCategory;
+  }
+
+  Future<List<Event>> getBookmarkedEvents(List<String> events) async {
+    try {
+      state = EventState.EventLoadingState;
+      bookmarkedEventList.clear();
+      bookmarkedEventList = await _repository.getBookmarkedEvents(events);
+      state = EventState.EventLoadedState;
+    } catch (e) {
+      state = EventState.EventErrorState;
+    }
+    return bookmarkedEventList;
   }
 }
