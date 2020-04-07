@@ -101,7 +101,7 @@ class HomePage extends StatelessWidget {
         } else if (index == 2) {
           Navigator.pushNamed(context, "/notificationPage");
         } else if (index == 3) {
-          _userViewModel.signOut();
+          await _userViewModel.signOut();
           Navigator.pushNamed(context, "/");
         }
       },

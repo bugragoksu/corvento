@@ -15,6 +15,11 @@ class SignPage extends StatelessWidget {
 
   UserViewModel _userViewModel;
 
+  changePage() {
+    isLoginForm = !isLoginForm;
+    _userViewModel.state = UserState.UserNotLoggedInState;
+  }
+
   @override
   Widget build(BuildContext context) {
     _userViewModel = Provider.of<UserViewModel>(context);
@@ -118,7 +123,7 @@ class SignPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // changePage();
+                    changePage();
                   },
                   child: Text(
                     isLoginForm
@@ -165,7 +170,9 @@ class SignPage extends StatelessWidget {
                 });
               }
             } else {
-              _userViewModel.signUp(_email.text.trim(), _password.text.trim());
+              var result = await _userViewModel.signUp(
+                  _email.text.trim(), _password.text.trim());
+              print(result);
             }
           }
         },

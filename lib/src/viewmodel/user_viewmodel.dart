@@ -71,7 +71,7 @@ class UserViewModel with ChangeNotifier {
     return user;
   }
 
-  Future<void> signOut() async {
+  Future signOut() async {
     try {
       _state = UserState.UserLoadingState;
       await _repository.signOut();

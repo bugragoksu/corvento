@@ -33,7 +33,7 @@ class FirebaseSign {
     }
   }
 
-  Future<void> signOut() async {
+  Future signOut() async {
     try {
       return _auth.signOut();
     } catch (e) {

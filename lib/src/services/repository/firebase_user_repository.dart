@@ -16,7 +16,7 @@ class UserRepository {
     return _sign.getCurrentUser();
   }
 
-  Future<void> signOut() async {
+  Future signOut() async {
     return _sign.signOut();
   }
 }
