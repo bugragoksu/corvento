@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseSign {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final Firestore _db = Firestore.instance;
 
   Future signIn(String email, String password) async {
     try {
@@ -18,7 +20,26 @@ class FirebaseSign {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-      return user.uid;
+      var isRegister = await userRegisterToDatabase(user);
+      if (isRegister != null) {
+        return user.uid;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future userRegisterToDatabase(FirebaseUser user) async {
+    try {
+      await _db.collection('users').add({
+        "uid": user.uid,
+        "email": user.email,
+        "name": '',
+        "profilePic": '',
+        'createdDate': DateTime.now()
+      });
     } catch (e) {
       return null;
     }

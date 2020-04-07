@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/model/category.dart';
+import 'package:eventapp/src/model/notification.dart';
 
 class FirebaseAPI {
   final Firestore _db = Firestore.instance;
@@ -134,5 +135,23 @@ class FirebaseAPI {
       }
     }
     return eventList;
+  }
+
+  Future<List<Notification>> getNotifications(String uid) async {
+    List<Notification> notifications = List<Notification>();
+    await _db
+        .collection("users")
+        .document(uid)
+        .collection('notifications')
+        .orderBy("date")
+        .getDocuments()
+        .then((notif) {
+      notif.documents.forEach((element) {
+        if (element.data != null) {
+          notifications.add(Notification.fromFirestore(element));
+        }
+      });
+    });
+    return notifications;
   }
 }
