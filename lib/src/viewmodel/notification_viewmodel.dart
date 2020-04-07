@@ -17,6 +17,7 @@ class NotificationViewModel with ChangeNotifier {
   NotificationViewModel({@required this.uid}) {
     notificationList = List<UserNotification>();
     _state = NotificationState.InitialNotificationState;
+    getNotifications();
   }
 
   NotificationState get state => _state;

@@ -1,10 +1,13 @@
 import 'package:eventapp/src/config/constant.dart';
+import 'package:eventapp/src/model/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NotificationCard extends StatelessWidget {
+  final UserNotification notification;
   const NotificationCard({
     Key key,
+    @required this.notification,
   }) : super(key: key);
 
   @override
@@ -29,7 +32,7 @@ class NotificationCard extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                "Yeni Etkinlik :",
+                notification.title,
                 style: TextStyle(color: Colors.white, fontSize: 12),
               ),
               SizedBox(
@@ -37,7 +40,7 @@ class NotificationCard extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  "WTM Mersin IWD'20",
+                  notification.data,
                   style: TextStyle(color: Colors.white, fontSize: 12),
                   overflow: TextOverflow.ellipsis,
                 ),
