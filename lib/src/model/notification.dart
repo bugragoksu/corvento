@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Notification {
+class UserNotification {
   final String title;
   final String data;
   final DateTime date;
 
-  Notification({this.title, this.data, this.date});
+  UserNotification({this.title, this.data, this.date});
 
-  factory Notification.fromFirestore(DocumentSnapshot snapshot) {
+  factory UserNotification.fromFirestore(DocumentSnapshot snapshot) {
     Map data = snapshot.data;
-    return Notification(
+    return UserNotification(
         title: data["title"] ?? 'Yeni Bildirim',
         data: data['data'] ?? '',
         date: data['date'].toDate() ?? DateTime.now());

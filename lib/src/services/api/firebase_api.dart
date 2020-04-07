@@ -137,8 +137,8 @@ class FirebaseAPI {
     return eventList;
   }
 
-  Future<List<Notification>> getNotifications(String uid) async {
-    List<Notification> notifications = List<Notification>();
+  Future<List<UserNotification>> getNotifications(String uid) async {
+    List<UserNotification> notifications = List<UserNotification>();
     await _db
         .collection("users")
         .document(uid)
@@ -148,7 +148,7 @@ class FirebaseAPI {
         .then((notif) {
       notif.documents.forEach((element) {
         if (element.data != null) {
-          notifications.add(Notification.fromFirestore(element));
+          notifications.add(UserNotification.fromFirestore(element));
         }
       });
     });
