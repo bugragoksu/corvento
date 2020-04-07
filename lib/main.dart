@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:eventapp/src/viewmodel/event_viewmodel.dart';
 import 'package:eventapp/src/viewmodel/category_viewmodel.dart';
 import 'package:eventapp/src/viewmodel/featured_event_viewmodel.dart';
+import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
 
 void main() async {
   //setupLocator();
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<CategoryViewModel>(
           create: (context) => CategoryViewModel(),
+        ),
+        ChangeNotifierProvider<UserViewModel>(
+          create: (context) => UserViewModel(),
         ),
       ],
       child: MaterialApp(

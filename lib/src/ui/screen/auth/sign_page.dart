@@ -1,5 +1,9 @@
 import 'package:eventapp/src/config/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
+import 'package:provider/provider.dart';
+
+//TODO FIX THIS SHIT PAGE
 
 class SignPage extends StatefulWidget {
   @override
@@ -8,12 +12,15 @@ class SignPage extends StatefulWidget {
 
 class _SignPageState extends State<SignPage> {
   final _formKey = GlobalKey<FormState>();
-
-  String _email, _pass;
+  TextEditingController _email, _password;
   bool isLoginForm;
+
+  UserViewModel _userViewModel;
   @override
   void initState() {
-    isLoginForm = false;
+    _email = TextEditingController();
+    _password = TextEditingController();
+    isLoginForm = true;
     super.initState();
   }
 
@@ -25,6 +32,7 @@ class _SignPageState extends State<SignPage> {
 
   @override
   Widget build(BuildContext context) {
+    _userViewModel = Provider.of<UserViewModel>(context);
     return Scaffold(
       backgroundColor: appColor,
       body: Container(
@@ -56,7 +64,7 @@ class _SignPageState extends State<SignPage> {
                     elevation: 1,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     child: TextFormField(
-                      onSaved: (val) => _email = val,
+                      controller: _email,
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Lütfen Email adresinizi giriniz';
@@ -94,7 +102,7 @@ class _SignPageState extends State<SignPage> {
                     elevation: 1,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     child: TextFormField(
-                      onSaved: (val) => _pass = val,
+                      controller: _password,
                       validator: (value) {
                         if (value.length < 6) {
                           return 'Şifreniz en az 6 karakter olmalıdır';
@@ -118,26 +126,7 @@ class _SignPageState extends State<SignPage> {
                 SizedBox(
                   height: 20,
                 ),
-                MaterialButton(
-                  padding: const EdgeInsets.all(.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  child: Text(
-                    isLoginForm ? "Kayıt Ol" : "Giriş Yap",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                    ),
-                  ),
-                  color: Colors.yellow.shade700,
-                  height: 40,
-                  minWidth: double.infinity,
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      //login
-                    }
-                  },
-                ),
+                buildButton(context),
                 SizedBox(
                   height: 20,
                 ),
@@ -158,5 +147,43 @@ class _SignPageState extends State<SignPage> {
         ),
       ),
     );
+  }
+
+  Widget buildButton(context) {
+    if (_userViewModel.state == UserState.UserNotLoggedInState ||
+        _userViewModel.state == UserState.InitialUserState ||
+        _userViewModel.state == UserState.UserErrorState) {
+      return MaterialButton(
+        padding: const EdgeInsets.all(.0),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Text(
+          isLoginForm ? "Giriş Yap" : "Kayıt Ol",
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.black,
+          ),
+        ),
+        color: Colors.yellow.shade700,
+        height: 40,
+        minWidth: double.infinity,
+        onPressed: () {
+          if (_formKey.currentState.validate()) {
+            if (isLoginForm) {
+              _userViewModel.signIn(_email.text.trim(), _password.text.trim());
+            } else {
+              _userViewModel.signUp(_email.text.trim(), _password.text.trim());
+            }
+          }
+        },
+      );
+    } else if (_userViewModel.state == UserState.UserLoadingState) {
+      return Center(child: CircularProgressIndicator());
+    } else if (_userViewModel.state == UserState.UserLoggedInState) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, "/home", (Route<dynamic> route) => false);
+      });
+    }
   }
 }

@@ -14,7 +14,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case '/home':
         return MaterialPageRoute(builder: (_) => HomePage());
       case '/upcomingEvents':
         return MaterialPageRoute(builder: (_) => UpcomingEventsPage());
@@ -31,7 +31,7 @@ class Router {
         return MaterialPageRoute(builder: (_) => CategoryPage());
       case '/eventsbycategoryPage':
         return MaterialPageRoute(builder: (_) => EventByCategoryPage());
-      case '/signPage':
+      case '/':
         return MaterialPageRoute(builder: (_) => SignPage());
 
       default:
