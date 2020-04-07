@@ -5,34 +5,41 @@ import 'package:provider/provider.dart';
 
 //TODO FIX THIS SHIT PAGE
 
-class SignPage extends StatefulWidget {
-  @override
-  _SignPageState createState() => _SignPageState();
-}
-
-class _SignPageState extends State<SignPage> {
+class SignPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _email, _password;
-  bool isLoginForm;
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+  bool isLoginForm = true;
 
   UserViewModel _userViewModel;
-  @override
-  void initState() {
-    _email = TextEditingController();
-    _password = TextEditingController();
-    isLoginForm = true;
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   _email = TextEditingController();
+  //   _password = TextEditingController();
+  //   isLoginForm = true;
+  //   super.initState();
+  // }
 
-  void changePage() {
-    setState(() {
-      isLoginForm = !isLoginForm;
-    });
+  // void changePage() {
+  //   setState(() {
+  //     isLoginForm = !isLoginForm;
+  //   });
+  // }
+
+  goHome(context) async {
+    var user = await _userViewModel.getCurrentUser();
+    if (user != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, "/home", (Route<dynamic> route) => false);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     _userViewModel = Provider.of<UserViewModel>(context);
+    goHome(context);
     return Scaffold(
       backgroundColor: appColor,
       body: Container(
@@ -132,7 +139,7 @@ class _SignPageState extends State<SignPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    changePage();
+                    // changePage();
                   },
                   child: Text(
                     isLoginForm
@@ -150,9 +157,9 @@ class _SignPageState extends State<SignPage> {
   }
 
   Widget buildButton(context) {
-    if (_userViewModel.state == UserState.UserNotLoggedInState ||
-        _userViewModel.state == UserState.InitialUserState ||
-        _userViewModel.state == UserState.UserErrorState) {
+    if (_userViewModel.state == UserState.UserLoadingState) {
+      return Center(child: CircularProgressIndicator());
+    } else {
       return MaterialButton(
         padding: const EdgeInsets.all(.0),
         shape:
@@ -177,13 +184,6 @@ class _SignPageState extends State<SignPage> {
           }
         },
       );
-    } else if (_userViewModel.state == UserState.UserLoadingState) {
-      return Center(child: CircularProgressIndicator());
-    } else if (_userViewModel.state == UserState.UserLoggedInState) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, "/home", (Route<dynamic> route) => false);
-      });
     }
   }
 }

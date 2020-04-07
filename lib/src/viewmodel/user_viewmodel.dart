@@ -18,12 +18,10 @@ class UserViewModel with ChangeNotifier {
   UserViewModel() {
     _state = UserState.InitialUserState;
     _repository = UserRepository();
-    initUser();
+   
   }
 
-  initUser() async {
-    user = await getCurrentUser();
-  }
+ 
 
   UserState get state => _state;
 
@@ -65,11 +63,7 @@ class UserViewModel with ChangeNotifier {
     try {
       _state = UserState.UserLoadingState;
       user = await _repository.getCurrentUser();
-      if (user != null) {
-        _state = UserState.UserLoggedInState;
-      } else {
-        _state = UserState.UserNotLoggedInState;
-      }
+      _state=UserState.UserLoggedInState;
     } catch (e) {
       _state = UserState.UserErrorState;
     }
