@@ -4,25 +4,41 @@ class FirebaseSign {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   signIn(String email, String password) async {
-    AuthResult result = await _auth.signInWithEmailAndPassword(
-        email: email, password: password);
-    FirebaseUser user = result.user;
-    return user.uid;
+    try {
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
+      return user.uid;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<String> signUp(String email, String password) async {
-    AuthResult result = await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    FirebaseUser user = result.user;
-    return user.uid;
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
+      return user.uid;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<FirebaseUser> getCurrentUser() async {
-    FirebaseUser user = await _auth.currentUser();
-    return user;
+    try {
+      FirebaseUser user = await _auth.currentUser();
+      return user;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<void> signOut() async {
-    return _auth.signOut();
+    try {
+      return _auth.signOut();
+    } catch (e) {
+      return null;
+    }
   }
 }

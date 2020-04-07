@@ -18,10 +18,12 @@ class UserViewModel with ChangeNotifier {
   UserViewModel() {
     _state = UserState.InitialUserState;
     _repository = UserRepository();
-   
+    initUser();
   }
 
- 
+  initUser() async {
+    user = await getCurrentUser();
+  }
 
   UserState get state => _state;
 
@@ -35,9 +37,7 @@ class UserViewModel with ChangeNotifier {
     try {
       _state = UserState.UserLoadingState;
       uid = _repository.signIn(email, password);
-      if (uid != null) {
-        _state = UserState.UserNotLoggedInState;
-      }
+      _state = UserState.UserNotLoggedInState;
     } catch (e) {
       _state = UserState.UserErrorState;
     }
@@ -49,10 +49,7 @@ class UserViewModel with ChangeNotifier {
     try {
       _state = UserState.UserLoadingState;
       uid = await _repository.signUp(email, password);
-      if (uid != null) {
-        _state = UserState.UserLoggedInState;
-        uid = "";
-      }
+      _state = UserState.UserLoggedInState;
     } catch (e) {
       _state = UserState.UserErrorState;
     }
@@ -63,7 +60,11 @@ class UserViewModel with ChangeNotifier {
     try {
       _state = UserState.UserLoadingState;
       user = await _repository.getCurrentUser();
-      _state=UserState.UserLoggedInState;
+      if (user != null) {
+        _state = UserState.UserLoggedInState;
+      } else {
+        _state = UserState.UserNotLoggedInState;
+      }
     } catch (e) {
       _state = UserState.UserErrorState;
     }
@@ -74,9 +75,7 @@ class UserViewModel with ChangeNotifier {
     try {
       _state = UserState.UserLoadingState;
       await _repository.signOut();
-      if (user != null) {
-        _state = UserState.UserNotLoggedInState;
-      }
+      _state = UserState.UserNotLoggedInState;
     } catch (e) {
       _state = UserState.UserErrorState;
     }

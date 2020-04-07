@@ -2,6 +2,7 @@ import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/services/local/sharedpref_manager.dart';
 import 'package:eventapp/src/ui/widget/featured_event_card.dart';
 import 'package:eventapp/src/ui/widget/upcoming_event_card.dart';
+import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -11,11 +12,13 @@ import 'package:eventapp/src/viewmodel/featured_event_viewmodel.dart';
 class HomePage extends StatelessWidget {
   EventViewModel _eventViewModel;
   FeaturedEventViewModel _featuredEventViewModel;
+  UserViewModel _userViewModel;
   SharedPrefManager pf = SharedPrefManager();
   @override
   Widget build(BuildContext context) {
     _eventViewModel = Provider.of<EventViewModel>(context);
     _featuredEventViewModel = Provider.of<FeaturedEventViewModel>(context);
+    _userViewModel = Provider.of<UserViewModel>(context);
 
     return Scaffold(
       backgroundColor: appColor,
@@ -88,17 +91,21 @@ class HomePage extends StatelessWidget {
 
   BottomNavigationBar buildBottomNavigationBar(context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: appColor,
       onTap: (index) async {
         if (index == 1) {
           var events = await pf.getBookmarkedEventList();
           _eventViewModel.getBookmarkedEvents(events);
           Navigator.pushNamed(context, "/bookmarkPage");
         } else if (index == 2) {
-          Navigator.pushNamed(context, "/signPage");
+          Navigator.pushNamed(context, "/notificationPage");
+        } else if (index == 3) {
+          _userViewModel.signOut();
+          Navigator.pushNamed(context, "/");
         }
       },
       iconSize: 26,
-      backgroundColor: appColor,
       items: [
         BottomNavigationBarItem(
             title: Text(""),
@@ -116,6 +123,13 @@ class HomePage extends StatelessWidget {
             title: Text(""),
             icon: Icon(
               FontAwesomeIcons.bell,
+              color: Colors.white,
+              size: 20,
+            )),
+        BottomNavigationBarItem(
+            title: Text(""),
+            icon: Icon(
+              FontAwesomeIcons.user,
               color: Colors.white,
               size: 20,
             )),

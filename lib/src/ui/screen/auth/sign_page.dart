@@ -1,6 +1,7 @@
 import 'package:eventapp/src/config/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 //TODO FIX THIS SHIT PAGE
@@ -10,36 +11,14 @@ class SignPage extends StatelessWidget {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
   bool isLoginForm = true;
+  bool firstCheck = true;
 
   UserViewModel _userViewModel;
-  // @override
-  // void initState() {
-  //   _email = TextEditingController();
-  //   _password = TextEditingController();
-  //   isLoginForm = true;
-  //   super.initState();
-  // }
-
-  // void changePage() {
-  //   setState(() {
-  //     isLoginForm = !isLoginForm;
-  //   });
-  // }
-
-  goHome(context) async {
-    var user = await _userViewModel.getCurrentUser();
-    if (user != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, "/home", (Route<dynamic> route) => false);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     _userViewModel = Provider.of<UserViewModel>(context);
-    goHome(context);
+
     return Scaffold(
       backgroundColor: appColor,
       body: Container(
@@ -178,6 +157,10 @@ class SignPage extends StatelessWidget {
           if (_formKey.currentState.validate()) {
             if (isLoginForm) {
               _userViewModel.signIn(_email.text.trim(), _password.text.trim());
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/home", (Route<dynamic> route) => false);
+              });
             } else {
               _userViewModel.signUp(_email.text.trim(), _password.text.trim());
             }

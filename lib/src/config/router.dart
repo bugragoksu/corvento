@@ -1,5 +1,6 @@
 import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/ui/screen/auth/sign_page.dart';
+import 'package:eventapp/src/ui/screen/splash_page.dart';
 import 'package:eventapp/src/ui/screen/bookmarks_page.dart';
 import 'package:eventapp/src/ui/screen/category_page.dart';
 import 'package:eventapp/src/ui/screen/event_detail_page.dart';
@@ -14,8 +15,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case '/':
+        return MaterialPageRoute(builder: (_) => SplashPage());
       case '/home':
         return MaterialPageRoute(builder: (_) => HomePage());
+      case '/sign':
+        return MaterialPageRoute(builder: (_) => SignPage());
       case '/upcomingEvents':
         return MaterialPageRoute(builder: (_) => UpcomingEventsPage());
       case '/featuredEvents':
@@ -31,8 +36,6 @@ class Router {
         return MaterialPageRoute(builder: (_) => CategoryPage());
       case '/eventsbycategoryPage':
         return MaterialPageRoute(builder: (_) => EventByCategoryPage());
-      case '/':
-        return MaterialPageRoute(builder: (_) => SignPage());
 
       default:
         return MaterialPageRoute(
