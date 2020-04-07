@@ -153,14 +153,17 @@ class SignPage extends StatelessWidget {
         color: Colors.yellow.shade700,
         height: 40,
         minWidth: double.infinity,
-        onPressed: () {
+        onPressed: () async {
           if (_formKey.currentState.validate()) {
             if (isLoginForm) {
-              _userViewModel.signIn(_email.text.trim(), _password.text.trim());
-              SchedulerBinding.instance.addPostFrameCallback((_) {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, "/home", (Route<dynamic> route) => false);
-              });
+              var result = await _userViewModel.signIn(
+                  _email.text.trim(), _password.text.trim());
+              if (result != null) {
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/home", (Route<dynamic> route) => false);
+                });
+              }
             } else {
               _userViewModel.signUp(_email.text.trim(), _password.text.trim());
             }

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class UserRepository {
   FirebaseSign _sign = FirebaseSign();
 
-  signIn(String email, String password) async {
+  Future signIn(String email, String password) async {
     return _sign.signIn(email, password);
   }
 

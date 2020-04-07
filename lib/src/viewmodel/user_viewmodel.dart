@@ -32,16 +32,16 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  signIn(String email, String password) async {
-    String uid;
+  Future signIn(String email, String password) async {
+    var result;
     try {
       _state = UserState.UserLoadingState;
-      uid = _repository.signIn(email, password);
+      result = await _repository.signIn(email, password);
       _state = UserState.UserNotLoggedInState;
     } catch (e) {
       _state = UserState.UserErrorState;
     }
-    return uid;
+    return result;
   }
 
   Future<String> signUp(String email, String password) async {
