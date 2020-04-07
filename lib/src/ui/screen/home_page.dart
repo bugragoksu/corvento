@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
           _eventViewModel.getBookmarkedEvents(events);
           Navigator.pushNamed(context, "/bookmarkPage");
         } else if (index == 2) {
-          Navigator.pushNamed(context, "/login");
+          Navigator.pushNamed(context, "/signPage");
         }
       },
       iconSize: 26,
