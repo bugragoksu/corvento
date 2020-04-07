@@ -1,7 +1,7 @@
 import 'package:eventapp/src/services/api/firebase_sign.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FirebaseUserRepository {
+class UserRepository {
   FirebaseSign _sign = FirebaseSign();
 
   signIn(String email, String password) async {
