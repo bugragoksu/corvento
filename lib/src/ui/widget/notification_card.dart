@@ -1,10 +1,13 @@
 import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/model/notification.dart';
+import 'package:eventapp/src/viewmodel/notification_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class NotificationCard extends StatelessWidget {
   final UserNotification notification;
+
   const NotificationCard({
     Key key,
     @required this.notification,
@@ -12,6 +15,8 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NotificationViewModel notificationViewModel =
+        Provider.of<NotificationViewModel>(context);
     return Container(
       color: appColor,
       height: 75,
@@ -47,7 +52,10 @@ class NotificationCard extends StatelessWidget {
               ),
               Spacer(),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  notificationViewModel
+                      .deleteNotification(notification.documentID);
+                },
                 icon: Icon(FontAwesomeIcons.trashAlt,
                     color: Colors.white, size: 16),
               )
