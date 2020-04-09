@@ -142,7 +142,8 @@ class FirebaseAPI {
     await _db
         .collection("users")
         .document(uid)
-        .collection('notifications')
+        .collection("notifications")
+        .where("isRead", isEqualTo: "0")
         .orderBy("date")
         .getDocuments()
         .then((notif) {
