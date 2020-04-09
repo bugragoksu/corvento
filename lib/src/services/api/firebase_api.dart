@@ -155,4 +155,18 @@ class FirebaseAPI {
     });
     return notifications;
   }
+
+  Future<bool> deleteNotification(String uid, String documentID) async {
+    try {
+      await _db
+          .collection("users")
+          .document(uid)
+          .collection("notifications")
+          .document(documentID)
+          .updateData({"isRead": "1"});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }
