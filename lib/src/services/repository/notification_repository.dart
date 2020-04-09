@@ -6,4 +6,8 @@ class NotificationRepository {
   Future<List<UserNotification>> getNotifications(String uid) async {
     return await _api.getNotifications(uid);
   }
+
+  Future<bool> deleteNotification(String uid, String documentID) async {
+    return await _api.deleteNotification(uid, documentID);
+  }
 }
