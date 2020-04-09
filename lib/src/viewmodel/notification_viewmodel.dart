@@ -38,4 +38,13 @@ class NotificationViewModel with ChangeNotifier {
     }
     return notificationList;
   }
+
+  Future<bool> deleteNotification(String documentID) async {
+    try {
+      await _repository.deleteNotification(this.uid, documentID);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

@@ -6,7 +6,6 @@ import 'package:eventapp/src/viewmodel/notification_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-//TODO fix this page
 class NotificationPage extends StatelessWidget {
   UserViewModel _userViewModel;
   @override
