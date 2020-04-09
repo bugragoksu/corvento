@@ -26,14 +26,14 @@ class NotificationCard extends StatelessWidget {
               Icon(
                 FontAwesomeIcons.infoCircle,
                 color: Colors.white,
-                size: 22,
+                size: 32,
               ),
               SizedBox(
                 width: 10,
               ),
               Text(
-                notification.title,
-                style: TextStyle(color: Colors.white, fontSize: 12),
+                notification.title + " :",
+                style: TextStyle(color: Colors.white, fontSize: 14),
               ),
               SizedBox(
                 width: 10,
@@ -41,7 +41,7 @@ class NotificationCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   notification.data,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

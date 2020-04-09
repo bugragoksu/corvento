@@ -45,7 +45,7 @@ class NotificationPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Kayıtlı etkinliğiniz bulunmamaktadır",
+                  "Henüz bildirim bulunmamaktadır",
                   style: TextStyle(color: Colors.white),
                   overflow: TextOverflow.ellipsis,
                 ),

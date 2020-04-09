@@ -33,13 +33,16 @@ class FirebaseSign {
 
   Future userRegisterToDatabase(FirebaseUser user) async {
     try {
-      await _db.collection('users').add({
+      var data = {
         "uid": user.uid,
         "email": user.email,
         "name": '',
         "profilePic": '',
         'createdDate': DateTime.now()
-      });
+      };
+      await _db.collection('users').document(user.uid).setData(data);
+
+      //await _db.collection('users').add();
     } catch (e) {
       return null;
     }
