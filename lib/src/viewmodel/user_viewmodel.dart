@@ -1,29 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:eventapp/src/model/user.dart';
+import 'package:eventapp/src/services/repository/user_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:eventapp/src/services/repository/firebase_user_repository.dart';
 
-enum UserState {
-  InitialUserState,
-  UserLoadingState,
-  UserLoggedInState,
-  UserNotLoggedInState,
-  UserErrorState
-}
+enum UserState { Idle, Busy }
 
 class UserViewModel with ChangeNotifier {
-  UserState _state;
-  UserRepository _repository;
-  FirebaseUser user;
+  UserState _state = UserState.Idle;
+  UserRepository _userRepository = UserRepository();
+  User _user;
 
-  UserViewModel() {
-    _state = UserState.InitialUserState;
-    _repository = UserRepository();
-    initUser();
-  }
-
-  initUser() async {
-    user = await getCurrentUser();
-  }
+  User get user => _user;
 
   UserState get state => _state;
 
@@ -32,52 +18,62 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future signIn(String email, String password) async {
-    var result;
-    try {
-      _state = UserState.UserLoadingState;
-      result = await _repository.signIn(email, password);
-      _state = UserState.UserNotLoggedInState;
-    } catch (e) {
-      _state = UserState.UserErrorState;
-    }
-    return result;
+  UserViewModel() {
+    currentUser();
   }
 
-  Future<String> signUp(String email, String password) async {
-    String uid;
+  Future<User> currentUser() async {
     try {
-      _state = UserState.UserLoadingState;
-      uid = await _repository.signUp(email, password);
-      _state = UserState.UserLoggedInState;
+      state = UserState.Busy;
+      _user = await _userRepository.currentUser();
+      return _user;
     } catch (e) {
-      _state = UserState.UserErrorState;
+      debugPrint(e.toString());
+      return null;
+    } finally {
+      state = UserState.Idle;
     }
-    return uid;
   }
 
-  Future<FirebaseUser> getCurrentUser() async {
+  Future<User> createUserWithEmailAndPassword(
+      String email, String password) async {
     try {
-      _state = UserState.UserLoadingState;
-      user = await _repository.getCurrentUser();
-      if (user != null) {
-        _state = UserState.UserLoggedInState;
-      } else {
-        _state = UserState.UserNotLoggedInState;
-      }
+      state = UserState.Busy;
+      _user =
+          await _userRepository.createUserWithEmailAndPassword(email, password);
+      return _user;
     } catch (e) {
-      _state = UserState.UserErrorState;
+      debugPrint(e.toString());
+      return null;
+    } finally {
+      state = UserState.Idle;
     }
-    return user;
   }
 
-  Future signOut() async {
+  Future<User> signInWithEmailAndPassword(String email, String password) async {
     try {
-      _state = UserState.UserLoadingState;
-      await _repository.signOut();
-      _state = UserState.UserNotLoggedInState;
+      state = UserState.Busy;
+      _user = await _userRepository.signInWithEmailAndPassword(email, password);
+      return _user;
     } catch (e) {
-      _state = UserState.UserErrorState;
+      debugPrint(e.toString());
+      return null;
+    } finally {
+      state = UserState.Idle;
+    }
+  }
+
+  Future<bool> signOut() async {
+    try {
+      state = UserState.Busy;
+      bool result = await _userRepository.signOut();
+      _user = null;
+      return result;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    } finally {
+      state = UserState.Idle;
     }
   }
 }

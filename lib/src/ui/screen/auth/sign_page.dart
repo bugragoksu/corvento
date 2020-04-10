@@ -1,29 +1,54 @@
 import 'package:eventapp/src/config/constant.dart';
+import 'package:eventapp/src/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 //TODO FIX THIS SHIT PAGE
 
-class SignPage extends StatelessWidget {
+class SignPage extends StatefulWidget {
+  @override
+  _SignPageState createState() => _SignPageState();
+}
+
+class _SignPageState extends State<SignPage> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
+
+  String _email, _password;
+
   bool isLoginForm = true;
+
   bool firstCheck = true;
 
-  UserViewModel _userViewModel;
+  void changePage() {
+    setState(() {
+      isLoginForm = !isLoginForm;
+    });
+  }
 
-  changePage() {
-    isLoginForm = !isLoginForm;
-    _userViewModel.state = UserState.UserNotLoggedInState;
+  Future<void> _formSubmit() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
+
+      if (isLoginForm) {
+        User _loginUser =
+            await _userViewModel.signInWithEmailAndPassword(_email, _password);
+        if (_loginUser != null) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              '/home', (Route<dynamic> route) => false);
+        } else {}
+      } else {
+        User _registerUser = await _userViewModel
+            .createUserWithEmailAndPassword(_email, _password);
+        if (_registerUser != null) {
+        } else {}
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    _userViewModel = Provider.of<UserViewModel>(context);
-
     return Scaffold(
       backgroundColor: appColor,
       body: Container(
@@ -55,7 +80,10 @@ class SignPage extends StatelessWidget {
                     elevation: 1,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     child: TextFormField(
-                      controller: _email,
+                      keyboardType: TextInputType.emailAddress,
+                      onSaved: (value) {
+                        _email = value.trim();
+                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Lütfen Email adresinizi giriniz';
@@ -93,7 +121,9 @@ class SignPage extends StatelessWidget {
                     elevation: 1,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     child: TextFormField(
-                      controller: _password,
+                      onSaved: (value) {
+                        _password = value.trim();
+                      },
                       validator: (value) {
                         if (value.length < 6) {
                           return 'Şifreniz en az 6 karakter olmalıdır';
@@ -141,42 +171,26 @@ class SignPage extends StatelessWidget {
   }
 
   Widget buildButton(context) {
-    if (_userViewModel.state == UserState.UserLoadingState) {
+    if (false) {
       return Center(child: CircularProgressIndicator());
     } else {
       return MaterialButton(
-        padding: const EdgeInsets.all(.0),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        child: Text(
-          isLoginForm ? "Giriş Yap" : "Kayıt Ol",
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.black,
+          padding: const EdgeInsets.all(.0),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Text(
+            isLoginForm ? "Giriş Yap" : "Kayıt Ol",
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
           ),
-        ),
-        color: Colors.yellow.shade700,
-        height: 40,
-        minWidth: double.infinity,
-        onPressed: () async {
-          if (_formKey.currentState.validate()) {
-            if (isLoginForm) {
-              var result = await _userViewModel.signIn(
-                  _email.text.trim(), _password.text.trim());
-              if (result != null) {
-                SchedulerBinding.instance.addPostFrameCallback((_) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, "/home", (Route<dynamic> route) => false);
-                });
-              }
-            } else {
-              var result = await _userViewModel.signUp(
-                  _email.text.trim(), _password.text.trim());
-              print(result);
-            }
-          }
-        },
-      );
+          color: Colors.yellow.shade700,
+          height: 40,
+          minWidth: double.infinity,
+          onPressed: () {
+            _formSubmit();
+          });
     }
   }
 }

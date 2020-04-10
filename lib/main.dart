@@ -1,4 +1,5 @@
 import 'package:eventapp/src/config/router.dart';
+import 'package:eventapp/src/ui/screen/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             textTheme: Theme.of(context).textTheme.apply()),
         onGenerateRoute: Router.generateRoute,
-        initialRoute: "/",
+        initialRoute: '/',
       ),
     );
   }
