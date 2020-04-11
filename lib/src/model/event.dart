@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eventapp/src/model/author.dart';
+import 'package:eventapp/src/model/category.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
@@ -6,22 +8,24 @@ class Event {
   final String id;
   final String title;
   final String desc;
-  final String category;
+  //final String category;
   final DateTime date;
   final String eventUrl;
   final String imageUrl;
   final String venue;
-  final String author;
-  Event(
-      {this.id,
-      this.title,
-      this.desc,
-      this.category,
-      this.date,
-      this.eventUrl,
-      this.imageUrl,
-      this.venue, 
-      this.author});
+  final Author author;
+  final Category category;
+  Event({
+    this.id,
+    this.title,
+    this.desc,
+    this.category,
+    this.date,
+    this.eventUrl,
+    this.imageUrl,
+    this.venue,
+    this.author,
+  });
 
   factory Event.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;
@@ -36,6 +40,25 @@ class Event {
         venue: data['venue'] ?? '',
         author: data['author'] ?? '');
   }
+
+  factory Event.fromJson(Map<String, dynamic> json) => Event(
+        title: json["title"] ?? '',
+        desc: json["desc"] ?? '',
+        imageUrl: json["image"] ?? '',
+        venue: json["venue"] ?? '',
+        category: Category.fromJson(json["category"]) ?? null,
+        author: Author.fromJson(json["author"]) ?? null,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title ?? '',
+        "desc": desc ?? '',
+        "image": imageUrl ?? '',
+        "venue": venue ?? '',
+        "slug": imageUrl ?? '',
+        "category": category.toJson() ?? null,
+        "author": author.toJson() ?? null,
+      };
 
   String getDate() {
     initializeDateFormatting();
