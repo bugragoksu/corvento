@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   shared_preferences: ^0.5.6+3
   firebase_auth: ^0.15.5+3
+  add_2_calendar: ^1.4.0
 
 
 dev_dependencies:

@@ -4,6 +4,7 @@ import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/services/local/sharedpref_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:add_2_calendar/add_2_calendar.dart' as add2calendar;
 
 class EventDetailPage extends StatefulWidget {
   final Event event;
@@ -22,6 +23,15 @@ class _EventDetailPageState extends State<EventDetailPage> {
     isSaved = false;
     isMarked();
     super.initState();
+  }
+
+  saveCalendar() {
+    add2calendar.Event event = add2calendar.Event(
+        title: widget.event.title,
+        startDate: widget.event.date,
+        endDate: widget.event.date,
+        location: widget.event.venue);
+    add2calendar.Add2Calendar.addEvent2Cal(event);
   }
 
   isMarked() async {
@@ -79,6 +89,26 @@ class _EventDetailPageState extends State<EventDetailPage> {
                               color: Colors.black,
                               size: 20,
                             ))),
+            ),
+          ),
+          Positioned(
+            right: 10,
+            top: 80,
+            child: Container(
+              width: 40,
+              height: 50,
+              child: Card(
+                  color: Colors.yellowAccent.shade700,
+                  elevation: 0,
+                  child: IconButton(
+                      onPressed: () {
+                        saveCalendar();
+                      },
+                      icon: Icon(
+                        FontAwesomeIcons.calendarPlus,
+                        color: Colors.black,
+                        size: 20,
+                      ))),
             ),
           ),
           SafeArea(
