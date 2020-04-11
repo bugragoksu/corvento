@@ -1,5 +1,4 @@
 import 'package:eventapp/src/config/router.dart';
-import 'package:eventapp/src/ui/screen/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +8,6 @@ import 'package:eventapp/src/viewmodel/featured_event_viewmodel.dart';
 import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
 
 void main() async {
-  //setupLocator();
   runApp(MyApp());
 }
 
