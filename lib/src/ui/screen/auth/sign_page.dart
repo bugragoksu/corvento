@@ -15,7 +15,7 @@ class _SignPageState extends State<SignPage> {
   final _formKey = GlobalKey<FormState>();
 
   String _email, _password;
-
+  bool _showPassword = true;
   bool isLoginForm = true;
 
   bool firstCheck = true;
@@ -133,7 +133,21 @@ class _SignPageState extends State<SignPage> {
                       style: TextStyle(color: Colors.white),
                       onChanged: (value) {},
                       cursorColor: appYellow,
+                      obscureText: !_showPassword,
                       decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _showPassword = !_showPassword;
+                              });
+                            },
+                            icon: Icon(
+                              _showPassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Colors.white,
+                            ),
+                          ),
                           errorStyle: TextStyle(color: Colors.white70),
                           hintText: "Şifrenizi giriniz",
                           hintStyle:

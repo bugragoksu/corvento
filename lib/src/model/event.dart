@@ -8,24 +8,26 @@ class Event {
   final String id;
   final String title;
   final String desc;
-  //final String category;
+  final String category;
   final DateTime date;
   final String eventUrl;
   final String imageUrl;
   final String venue;
-  final Author author;
-  final Category category;
-  Event({
-    this.id,
-    this.title,
-    this.desc,
-    this.category,
-    this.date,
-    this.eventUrl,
-    this.imageUrl,
-    this.venue,
-    this.author,
-  });
+  final String author;
+  final Author authorServer;
+  final Category categoyServer;
+  Event(
+      {this.id,
+      this.title,
+      this.desc,
+      this.category,
+      this.date,
+      this.eventUrl,
+      this.imageUrl,
+      this.venue,
+      this.author,
+      this.authorServer,
+      this.categoyServer});
 
   factory Event.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;
@@ -46,8 +48,8 @@ class Event {
         desc: json["desc"] ?? '',
         imageUrl: json["image"] ?? '',
         venue: json["venue"] ?? '',
-        category: Category.fromJson(json["category"]) ?? null,
-        author: Author.fromJson(json["author"]) ?? null,
+        categoyServer: Category.fromJson(json["category"]) ?? null,
+        authorServer: Author.fromJson(json["author"]) ?? null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -56,8 +58,8 @@ class Event {
         "image": imageUrl ?? '',
         "venue": venue ?? '',
         "slug": imageUrl ?? '',
-        "category": category.toJson() ?? null,
-        "author": author.toJson() ?? null,
+        "category": categoyServer.toJson() ?? null,
+        "author": authorServer.toJson() ?? null,
       };
 
   String getDate() {
