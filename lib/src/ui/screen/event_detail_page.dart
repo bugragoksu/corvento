@@ -1,12 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/model/event.dart';
+import 'package:eventapp/src/services/local/sharedpref_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class EventDetailPage extends StatelessWidget {
+class EventDetailPage extends StatefulWidget {
   final Event event;
   EventDetailPage({@required this.event});
+
+  @override
+  _EventDetailPageState createState() => _EventDetailPageState();
+}
+
+class _EventDetailPageState extends State<EventDetailPage> {
+  bool isSaved;
+  SharedPrefManager prefManager;
+  @override
+  void initState() {
+    prefManager = SharedPrefManager();
+    isSaved = false;
+    isMarked();
+    super.initState();
+  }
+
+  isMarked() async {
+    isSaved = await prefManager.isMarked(widget.event.id);
+    setState(() {});
+  }
+
+  clickedBookmars() async {
+    if (!isSaved) {
+      //ekle
+
+      prefManager.addBookMarkEvents(widget.event.id);
+    } else {
+      prefManager.deleteEvent(widget.event.id);
+    }
+    setState(() {
+      isSaved = !isSaved;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,8 +51,34 @@ class EventDetailPage extends StatelessWidget {
           Container(
             height: 250,
             child: Image.network(
-              event.imageUrl,
+              widget.event.imageUrl,
               fit: BoxFit.fill,
+            ),
+          ),
+          Positioned(
+            right: 10,
+            top: 30,
+            child: Container(
+              width: 40,
+              height: 50,
+              child: Card(
+                  color: Colors.yellowAccent.shade700,
+                  elevation: 0,
+                  child: IconButton(
+                      onPressed: () {
+                        clickedBookmars();
+                      },
+                      icon: isSaved
+                          ? Icon(
+                              FontAwesomeIcons.solidBookmark,
+                              color: Colors.black,
+                              size: 20,
+                            )
+                          : Icon(
+                              FontAwesomeIcons.bookmark,
+                              color: Colors.black,
+                              size: 20,
+                            ))),
             ),
           ),
           SafeArea(
@@ -59,7 +120,7 @@ class EventDetailPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              event.title,
+                              widget.event.title,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24,
@@ -83,7 +144,7 @@ class EventDetailPage extends StatelessWidget {
                                   width: 10,
                                 ),
                                 Text(
-                                  event.author,
+                                  widget.event.author,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -113,7 +174,7 @@ class EventDetailPage extends StatelessWidget {
                                             size: 16,
                                           ),
                                           SizedBox(width: 5),
-                                          Text(event.getDate(),
+                                          Text(widget.event.getDate(),
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 color: Colors.black,
@@ -143,7 +204,7 @@ class EventDetailPage extends StatelessWidget {
                                             size: 16,
                                           ),
                                           SizedBox(width: 5),
-                                          Text(event.getTime(),
+                                          Text(widget.event.getTime(),
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.black),
@@ -176,7 +237,7 @@ class EventDetailPage extends StatelessWidget {
                                             size: 16,
                                           ),
                                           SizedBox(width: 5),
-                                          Text(event.venue,
+                                          Text(widget.event.venue,
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.black),
@@ -201,7 +262,7 @@ class EventDetailPage extends StatelessWidget {
                               height: 20,
                             ),
                             Text(
-                              event.desc,
+                              widget.event.desc,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
