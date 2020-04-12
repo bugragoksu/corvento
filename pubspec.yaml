@@ -18,6 +18,7 @@ dependencies:
   shared_preferences: ^0.5.6+3
   firebase_auth: ^0.15.5+3
   add_2_calendar: ^1.4.0
+  fluttertoast: ^4.0.1
 
 
 dev_dependencies:
