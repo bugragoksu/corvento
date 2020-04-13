@@ -19,12 +19,17 @@ dependencies:
   firebase_auth: ^0.15.5+3
   add_2_calendar: ^1.4.0
   fluttertoast: ^4.0.1
+  flutter_launcher_icons: ^0.7.4
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: "launcher_icon" 
+  ios: true
+  image_path: "assets/img/favicon.png"
 
 flutter:
 
@@ -32,6 +37,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/img/
     - assets/fonts/
     - assets/fonts/Roboto/
 

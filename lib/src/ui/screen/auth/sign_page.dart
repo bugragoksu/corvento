@@ -13,9 +13,9 @@ class SignPage extends StatefulWidget {
 
 class _SignPageState extends State<SignPage> {
   final _formKey = GlobalKey<FormState>();
-
+  UserViewModel _userViewModel;
   String _email, _password;
-  bool _showPassword = true;
+  bool _showPassword = false;
   bool isLoginForm = true;
 
   bool firstCheck = true;
@@ -27,9 +27,9 @@ class _SignPageState extends State<SignPage> {
   }
 
   Future<void> _formSubmit() async {
+    setState(() {});
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      final _userViewModel = Provider.of<UserViewModel>(context, listen: false);
 
       if (isLoginForm) {
         User _loginUser =
@@ -49,6 +49,7 @@ class _SignPageState extends State<SignPage> {
 
   @override
   Widget build(BuildContext context) {
+    _userViewModel = Provider.of<UserViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: appColor,
       body: Container(
@@ -64,8 +65,9 @@ class _SignPageState extends State<SignPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 5,
+                  height: MediaQuery.of(context).size.height / 12,
                 ),
+                Center(child: Image.asset("assets/img/logo.png",height:200)),
                 Text(
                   "Email",
                   style: TextStyle(color: Colors.white, fontSize: 22),
@@ -185,7 +187,7 @@ class _SignPageState extends State<SignPage> {
   }
 
   Widget buildButton(context) {
-    if (false) {
+    if (_userViewModel.state == UserState.Busy) {
       return Center(child: CircularProgressIndicator());
     } else {
       return MaterialButton(
