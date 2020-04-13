@@ -1,14 +1,14 @@
 import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/ui/screen/auth/sign_page.dart';
 import 'package:eventapp/src/ui/screen/splash_page.dart';
-import 'package:eventapp/src/ui/screen/bookmarks_page.dart';
+import 'package:eventapp/src/ui/screen/event/bookmarks_page.dart';
 import 'package:eventapp/src/ui/screen/category_page.dart';
-import 'package:eventapp/src/ui/screen/event_detail_page.dart';
-import 'package:eventapp/src/ui/screen/events_by_category_page.dart';
-import 'package:eventapp/src/ui/screen/featured_events_page.dart';
+import 'package:eventapp/src/ui/screen/event/event_detail_page.dart';
+import 'package:eventapp/src/ui/screen/event/events_by_category_page.dart';
+import 'package:eventapp/src/ui/screen/event/featured_events_page.dart';
 import 'package:eventapp/src/ui/screen/home_page.dart';
 import 'package:eventapp/src/ui/screen/notification_page.dart';
-import 'package:eventapp/src/ui/screen/upcoming_event_page.dart';
+import 'package:eventapp/src/ui/screen/event/upcoming_event_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
