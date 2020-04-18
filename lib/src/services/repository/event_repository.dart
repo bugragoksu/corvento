@@ -1,15 +1,17 @@
 import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/services/api/firebase_api.dart';
+import 'package:eventapp/src/services/api/server_api.dart';
 
 class EventRepository {
   FirebaseAPI _api = FirebaseAPI();
+  ServerAPI _server = ServerAPI();
 
   Future<List<Event>> searchEvent(String text) async {
-    return await _api.search(text);
+    return await _server.search(text);
   }
 
   Future<List<Event>> getAllEvents() async {
-    return await _api.getAllEvents();
+    return await _server.getAllEvents();
   }
 
   Future<List<Event>> getFeaturedEvents() async {
@@ -25,6 +27,6 @@ class EventRepository {
   }
 
   Future<List<Event>> getBookmarkedEvents(List<String> events) async {
-    return await _api.getBookmarkedEvents(events);
+    return await _server.getBookmarkedEvents(events);
   }
 }

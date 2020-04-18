@@ -24,7 +24,7 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
   }
 
   isMarked() async {
-     isSaved = await prefManager.isMarked(widget.e.id);
+    isSaved = await prefManager.isMarked(widget.e.id);
     setState(() {});
   }
 
@@ -125,7 +125,7 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
                     color: Colors.yellowAccent.shade700,
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
-                      child: Text(widget.e.category,
+                      child: Text(widget.e.category.name,
                           style: TextStyle(
                             fontSize: 14,
                           )),

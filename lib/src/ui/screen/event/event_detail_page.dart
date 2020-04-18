@@ -174,7 +174,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                                   width: 10,
                                 ),
                                 Text(
-                                  widget.event.author,
+                                  widget.event.author.firstName,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
