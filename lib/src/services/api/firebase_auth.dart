@@ -31,6 +31,7 @@ class FirebaseAuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       userRegisterToDatabase(result.user);
+      _toast.localizedMessageFromFirebase("Create User Successful");
       return User.fromFirebaseUser(result.user);
     } catch (e) {
       _toast.localizedMessageFromFirebase(e.code);

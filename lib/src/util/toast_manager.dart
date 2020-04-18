@@ -15,7 +15,9 @@ class ToastManager {
       case "ERROR_WRONG_PASSWORD":
         selectedMessage = "Hatalı email veya şifre";
         break;
-
+      case "Create User Successful":
+        selectedMessage = "Kayıt işlemi başarılı, giriş yapabilirsiniz";
+        break;
       default:
         selectedMessage =
             "Ups. Bir şeyler ters gitti. Daha sonra tekrar deneyiniz";
