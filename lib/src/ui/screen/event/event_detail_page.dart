@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/services/local/sharedpref_manager.dart';
+import 'package:eventapp/src/util/toast_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:add_2_calendar/add_2_calendar.dart' as add2calendar;
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventDetailPage extends StatefulWidget {
   final Event event;
@@ -18,6 +20,7 @@ class EventDetailPage extends StatefulWidget {
 class _EventDetailPageState extends State<EventDetailPage> {
   bool isSaved;
   SharedPrefManager prefManager;
+  ToastManager _toast = ToastManager();
   @override
   void initState() {
     prefManager = SharedPrefManager();
@@ -38,6 +41,15 @@ class _EventDetailPageState extends State<EventDetailPage> {
   isMarked() async {
     isSaved = await prefManager.isMarked(widget.event.id);
     setState(() {});
+  }
+
+  launchURL() async {
+    String url = widget.event.eventUrl;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      _toast.showMessage('Could not launch $url');
+    }
   }
 
   clickedBookmars() async {
@@ -344,7 +356,9 @@ class _EventDetailPageState extends State<EventDetailPage> {
                                   color: Colors.yellow.shade700,
                                   height: 40,
                                   minWidth: double.infinity,
-                                  onPressed: () async {},
+                                  onPressed: () {
+                                    launchURL();
+                                  },
                                 ),
                               ),
                             ),
