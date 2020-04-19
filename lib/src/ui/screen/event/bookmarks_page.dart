@@ -24,50 +24,49 @@ class BookMarksPage extends StatelessWidget {
   }
 
   Widget buildBody() {
-    if (_eventViewModel.bookmarkedEventList.length == 0) {
+    if (_eventViewModel.state == EventState.EventLoadingState ||
+        _eventViewModel.state == EventState.InitialEventState) {
+      return Center(child: CircularProgressIndicator());
+    } else if (_eventViewModel.state == EventState.EventErrorState) {
       return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Kayıtlı etkinliğiniz bulunmamaktadır",
-              style: TextStyle(color: Colors.white),
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Icon(FontAwesomeIcons.heartBroken, color: Colors.white, size: 36)
-          ],
-        ),
-      );
+          child: Icon(FontAwesomeIcons.times, color: Colors.white, size: 32));
     } else {
-      return Container(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: ListView.builder(
-                itemCount: _eventViewModel.bookmarkedEventList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if (_eventViewModel.state == EventState.EventLoadingState ||
-                      _eventViewModel.state == EventState.InitialEventState) {
-                    return CircularProgressIndicator();
-                  } else if (_eventViewModel.state ==
-                      EventState.EventErrorState) {
-                    return Icon(FontAwesomeIcons.times,
-                        color: Colors.white, size: 32);
-                  } else {
+      if (_eventViewModel.bookmarkedEventList.length == 0) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Kayıtlı etkinliğiniz bulunmamaktadır",
+                style: TextStyle(color: Colors.white),
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Icon(FontAwesomeIcons.heartBroken, color: Colors.white, size: 36)
+            ],
+          ),
+        );
+      } else {
+        return Container(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _eventViewModel.bookmarkedEventList.length,
+                  itemBuilder: (BuildContext context, int index) {
                     return UpcomingEventCard(
                         event: _eventViewModel.bookmarkedEventList[index]);
-                  }
-                },
-              ),
-            )
-          ],
-        ),
-      );
+                  },
+                ),
+              )
+            ],
+          ),
+        );
+      }
     }
   }
 }
