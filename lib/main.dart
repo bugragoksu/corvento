@@ -1,4 +1,5 @@
 import 'package:eventapp/src/config/router.dart';
+import 'package:eventapp/src/util/firebase_notification_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-
+    FirebaseNotificationManager _firebaseMessaging =
+        FirebaseNotificationManager();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<EventViewModel>(

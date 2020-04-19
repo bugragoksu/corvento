@@ -21,6 +21,7 @@ dependencies:
   fluttertoast: ^4.0.1
   flutter_launcher_icons: ^0.7.4
   dio: ^3.0.9
+  firebase_messaging: ^6.0.13
 
 
 dev_dependencies:
