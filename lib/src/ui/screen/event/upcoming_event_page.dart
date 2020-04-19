@@ -203,7 +203,6 @@ class UpcomingEventsPage extends StatelessWidget {
         cursorColor: appYellow,
         onChanged: (value) {
           if (value.length >= 3) {
-            print(value);
             _eventViewModel.search(value.trim());
           }
           if (value.length == 0) {

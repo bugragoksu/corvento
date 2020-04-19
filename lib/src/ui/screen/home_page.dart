@@ -30,10 +30,10 @@ class HomePage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             buildNamesRow(context, "Öne Çıkan Etkinlik", "Tümünü Gör", 1),
-            // _featuredEventViewModel.featuredEventList.length > 0
-            //     ? FeaturedEventCard(
-            //         e: _featuredEventViewModel.featuredEventList[0])
-            //     : CircularProgressIndicator(),
+            _featuredEventViewModel.featuredEventList.length > 0
+                ? FeaturedEventCard(
+                    e: _featuredEventViewModel.featuredEventList[0])
+                : CircularProgressIndicator(),
             SizedBox(
               height: 10,
             ),

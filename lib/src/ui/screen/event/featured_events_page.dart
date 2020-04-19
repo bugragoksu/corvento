@@ -201,7 +201,6 @@ class FeaturedEventsPage extends StatelessWidget {
         controller: _editingController,
         onChanged: (value) {
           if (value.length >= 3) {
-            print(value);
             _eventViewModel.search(value.trim());
           }
           if (value.length == 0) {

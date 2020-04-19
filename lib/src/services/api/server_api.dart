@@ -39,6 +39,37 @@ class ServerAPI {
     }
   }
 
+  Future<List<Event>> getFeaturedEvents() async {
+    List<Event> events = List<Event>();
+    try {
+      Response response = await Dio().get(featuredEventsUrl);
+      response.data.forEach((data) {
+        if (data != null) {
+          events.add(Event.fromJson(data));
+        }
+      });
+      return events;
+    } catch (e) {
+      _toast.localizedMessageFromFirebase(e.code);
+      return events;
+    }
+  }
+   Future<List<Event>> featuredSearch(String text) async {
+    List<Event> events = List<Event>();
+    try {
+      Response response = await Dio().get(featuredEventsUrl + "?search=$text");
+      response.data.forEach((data) {
+        if (data != null) {
+          events.add(Event.fromJson(data));
+        }
+      });
+      return events;
+    } catch (e) {
+      _toast.localizedMessageFromFirebase(e.code);
+      return events;
+    }
+  }
+
   Future<List<Event>> getBookmarkedEvents(List<String> events) async {
     try {
       List<Event> eventList = List<Event>();

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         title: 'Evento',
         theme: ThemeData(
             primarySwatch: Colors.blue,
-            textTheme: Theme.of(context).textTheme.apply()),
+            textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Roboto')),
         onGenerateRoute: Router.generateRoute,
         initialRoute: '/',
       ),
