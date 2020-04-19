@@ -21,6 +21,9 @@ class ToastManager {
       case "Success Reset Password":
         selectedMessage = "Email başarılı bir şekilde gönderilmiştir";
         break;
+      case "ERROR_EMAIL_ALREADY_IN_USE":
+        selectedMessage = "Bu email ile kayıtlı bir kullanıcı bulunmaktadır";
+        break;
       default:
         selectedMessage =
             "Ups. Bir şeyler ters gitti. Daha sonra tekrar deneyiniz";

@@ -52,7 +52,7 @@ class _SignPageState extends State<SignPage> {
 
   @override
   Widget build(BuildContext context) {
-    _userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    _userViewModel = Provider.of<UserViewModel>(context);
     return Scaffold(
       backgroundColor: appColor,
       body: Container(

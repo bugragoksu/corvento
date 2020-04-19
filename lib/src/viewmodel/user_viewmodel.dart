@@ -26,11 +26,11 @@ class UserViewModel with ChangeNotifier {
     try {
       state = UserState.Busy;
       _user = await _userRepository.currentUser();
+      state = UserState.Idle;
       return _user;
     } catch (e) {
-      return null;
-    } finally {
       state = UserState.Idle;
+      return null;
     }
   }
 
@@ -40,11 +40,11 @@ class UserViewModel with ChangeNotifier {
       state = UserState.Busy;
       _user =
           await _userRepository.createUserWithEmailAndPassword(email, password);
+      state = UserState.Idle;
       return _user;
     } catch (e) {
-      return null;
-    } finally {
       state = UserState.Idle;
+      return null;
     }
   }
 
@@ -52,11 +52,11 @@ class UserViewModel with ChangeNotifier {
     try {
       state = UserState.Busy;
       _user = await _userRepository.signInWithEmailAndPassword(email, password);
+      state = UserState.Idle;
       return _user;
     } catch (e) {
-      return null;
-    } finally {
       state = UserState.Idle;
+      return null;
     }
   }
 
@@ -65,11 +65,11 @@ class UserViewModel with ChangeNotifier {
       state = UserState.Busy;
       bool result = await _userRepository.signOut();
       _user = null;
+      state = UserState.Idle;
       return result;
     } catch (e) {
-      return false;
-    } finally {
       state = UserState.Idle;
+      return false;
     }
   }
 
@@ -77,10 +77,10 @@ class UserViewModel with ChangeNotifier {
     try {
       state = UserState.Busy;
       await _userRepository.resetPassword(email);
-    } catch (e) {
-      return false;
-    } finally {
       state = UserState.Idle;
+    } catch (e) {
+      state = UserState.Idle;
+      return false;
     }
   }
 }
