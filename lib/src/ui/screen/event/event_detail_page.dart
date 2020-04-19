@@ -5,6 +5,7 @@ import 'package:eventapp/src/services/local/sharedpref_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:add_2_calendar/add_2_calendar.dart' as add2calendar;
+import 'package:share/share.dart';
 
 class EventDetailPage extends StatefulWidget {
   final Event event;
@@ -106,6 +107,29 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       },
                       icon: Icon(
                         FontAwesomeIcons.calendarPlus,
+                        color: Colors.black,
+                        size: 20,
+                      ))),
+            ),
+          ),
+          Positioned(
+            right: 10,
+            top: 130,
+            child: Container(
+              width: 40,
+              height: 50,
+              child: Card(
+                  color: Colors.yellowAccent.shade700,
+                  elevation: 0,
+                  child: IconButton(
+                      onPressed: () {
+                        Share.share(
+                          "corvento | Yeni bir etkinlik var! Göz atmak ister misin?\n " +
+                              widget.event.title,
+                        );
+                      },
+                      icon: Icon(
+                        FontAwesomeIcons.shareAlt,
                         color: Colors.black,
                         size: 20,
                       ))),
