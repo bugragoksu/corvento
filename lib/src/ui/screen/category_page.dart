@@ -50,7 +50,7 @@ class CategoryPage extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 _eventViewModel.getEventsByCategory(
-                    _categoryViewModel.categoryList[index].name);
+                    _categoryViewModel.categoryList[index].id);
                 Navigator.pushNamed(context, "/eventsbycategoryPage");
               },
               child: Card(

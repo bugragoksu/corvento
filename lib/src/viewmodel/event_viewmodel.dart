@@ -55,11 +55,11 @@ class EventViewModel with ChangeNotifier {
     return eventList;
   }
 
-  Future<List<Event>> getEventsByCategory(String category) async {
+  Future<List<Event>> getEventsByCategory(int categoryId) async {
     try {
       state = EventState.EventLoadingState;
       eventListByCategory.clear();
-      eventListByCategory = await _repository.getEventsByCategory(category);
+      eventListByCategory = await _repository.getEventsByCategory(categoryId);
       state = EventState.EventLoadedState;
     } catch (e) {
       state = EventState.EventErrorState;
