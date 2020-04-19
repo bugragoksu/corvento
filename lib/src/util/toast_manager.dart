@@ -18,6 +18,9 @@ class ToastManager {
       case "Create User Successful":
         selectedMessage = "Kayıt işlemi başarılı, giriş yapabilirsiniz";
         break;
+      case "Success Reset Password":
+        selectedMessage = "Email başarılı bir şekilde gönderilmiştir";
+        break;
       default:
         selectedMessage =
             "Ups. Bir şeyler ters gitti. Daha sonra tekrar deneyiniz";

@@ -20,6 +20,9 @@ class _SignPageState extends State<SignPage> {
 
   bool firstCheck = true;
 
+  final _resetPassFormKey = GlobalKey<FormState>();
+  String resetPassEmail;
+
   void changePage() {
     setState(() {
       isLoginForm = !isLoginForm;
@@ -67,7 +70,7 @@ class _SignPageState extends State<SignPage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 12,
                 ),
-                Center(child: Image.asset("assets/img/logo.png",height:200)),
+                Center(child: Image.asset("assets/img/logo.png", height: 200)),
                 Text(
                   "Email",
                   style: TextStyle(color: Colors.white, fontSize: 22),
@@ -167,16 +170,32 @@ class _SignPageState extends State<SignPage> {
                 SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    changePage();
-                  },
-                  child: Text(
+                Row(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        changePage();
+                      },
+                      child: Text(
+                        isLoginForm
+                            ? "Henüz yeni misin?"
+                            : "Hesabın var mı? Giriş Yap",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Spacer(),
                     isLoginForm
-                        ? "Henüz hesabın yok mu? Kayıt ol"
-                        : "Zaten kayıtlı mısın? Giriş Yap",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                        ? GestureDetector(
+                            onTap: () {
+                              showResetPasswordDialog();
+                            },
+                            child: Text(
+                              "Şifremi unuttum",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
+                        : Container()
+                  ],
                 )
               ],
             ),
@@ -208,5 +227,60 @@ class _SignPageState extends State<SignPage> {
             _formSubmit();
           });
     }
+  }
+
+  void showResetPasswordDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: appColor,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            title:
+                Text("Reset Password", style: TextStyle(color: Colors.white)),
+            content: Form(
+              key: _resetPassFormKey,
+              child: Material(
+                color: appTransparentColor,
+                elevation: 1,
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value) {
+                    resetPassEmail = value;
+                  },
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Lütfen Email adresinizi giriniz';
+                    }
+                    return null;
+                  },
+                  style: TextStyle(color: Colors.white),
+                  cursorColor: appYellow,
+                  decoration: InputDecoration(
+                      errorStyle: TextStyle(color: Colors.white70),
+                      hintText: "Email",
+                      hintStyle: TextStyle(color: Colors.white70, fontSize: 14),
+                      border: InputBorder.none,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  child: Text(
+                    "Gönder",
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  onPressed: () async {
+                    if (_resetPassFormKey.currentState.validate()) {
+                      await _userViewModel.resetPassword(resetPassEmail.trim());
+                    }
+                  }),
+            ],
+          );
+        });
   }
 }

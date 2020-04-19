@@ -67,4 +67,13 @@ class FirebaseAuthService {
       return null;
     }
   }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      _toast.localizedMessageFromFirebase("Success Reset Password");
+    } catch (error) {
+      _toast.localizedMessageFromFirebase(error.code);
+    }
+  }
 }

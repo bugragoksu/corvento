@@ -28,7 +28,6 @@ class UserViewModel with ChangeNotifier {
       _user = await _userRepository.currentUser();
       return _user;
     } catch (e) {
-      debugPrint(e.toString());
       return null;
     } finally {
       state = UserState.Idle;
@@ -43,7 +42,6 @@ class UserViewModel with ChangeNotifier {
           await _userRepository.createUserWithEmailAndPassword(email, password);
       return _user;
     } catch (e) {
-      debugPrint(e.toString());
       return null;
     } finally {
       state = UserState.Idle;
@@ -56,7 +54,6 @@ class UserViewModel with ChangeNotifier {
       _user = await _userRepository.signInWithEmailAndPassword(email, password);
       return _user;
     } catch (e) {
-      debugPrint(e.toString());
       return null;
     } finally {
       state = UserState.Idle;
@@ -70,7 +67,17 @@ class UserViewModel with ChangeNotifier {
       _user = null;
       return result;
     } catch (e) {
-      debugPrint(e.toString());
+      return false;
+    } finally {
+      state = UserState.Idle;
+    }
+  }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      state = UserState.Busy;
+      await _userRepository.resetPassword(email);
+    } catch (e) {
       return false;
     } finally {
       state = UserState.Idle;

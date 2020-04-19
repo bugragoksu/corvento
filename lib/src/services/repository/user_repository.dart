@@ -19,4 +19,8 @@ class UserRepository {
   Future<User> signInWithEmailAndPassword(String email, String password) async {
     return await _api.signInWithEmailAndPassword(email, password);
   }
+
+  Future<void> resetPassword(String email) async {
+    return await _api.resetPassword(email);
+  }
 }
