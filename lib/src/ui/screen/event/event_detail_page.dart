@@ -48,7 +48,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      _toast.showMessage('Could not launch $url');
+      _toast.showMessage('Ops. Bi şeyler ters gitti');
     }
   }
 

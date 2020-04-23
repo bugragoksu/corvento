@@ -3,6 +3,7 @@ import 'package:eventapp/src/config/api_settings.dart';
 import 'package:eventapp/src/model/category.dart';
 import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/util/toast_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ServerAPI {
   final ToastManager _toast = ToastManager();
@@ -121,6 +122,23 @@ class ServerAPI {
     } catch (e) {
       _toast.localizedMessageFromFirebase(e.code);
       return categories;
+    }
+  }
+
+  Future<bool> userRegisterToDatabase(FirebaseUser user) async {
+    try {
+      var data = {
+        "uid": user.uid,
+        "email": user.email,
+        "name": '',
+        "profilePic": '',
+        'createdDate': DateTime.now()
+      };
+      Response result = await Dio().post(registerUrl, data: data);
+      return true;
+    } catch (e) {
+      _toast.localizedMessageFromFirebase(e.code);
+      return false;
     }
   }
 }

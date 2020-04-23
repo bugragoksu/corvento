@@ -1,6 +1,6 @@
 import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/ui/screen/auth/sign_page.dart';
-import 'package:eventapp/src/ui/screen/profile_page.dart';
+import 'package:eventapp/src/ui/screen/contact_page.dart';
 import 'package:eventapp/src/ui/screen/splash_page.dart';
 import 'package:eventapp/src/ui/screen/event/bookmarks_page.dart';
 import 'package:eventapp/src/ui/screen/category_page.dart';
@@ -37,8 +37,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => CategoryPage());
       case '/eventsbycategoryPage':
         return MaterialPageRoute(builder: (_) => EventByCategoryPage());
-      case '/profilePage':
-        return MaterialPageRoute(builder: (_) => ProfilePage());
+      case '/contactPage':
+        return MaterialPageRoute(builder: (_) => ContactPage());
 
       default:
         return MaterialPageRoute(

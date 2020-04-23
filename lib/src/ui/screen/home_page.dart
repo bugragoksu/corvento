@@ -8,7 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:eventapp/src/viewmodel/event_viewmodel.dart';
 import 'package:eventapp/src/viewmodel/featured_event_viewmodel.dart';
-import 'package:eventapp/src/viewmodel/notification_viewmodel.dart';
 
 class HomePage extends StatelessWidget {
   EventViewModel _eventViewModel;
@@ -102,7 +101,7 @@ class HomePage extends StatelessWidget {
         } else if (index == 2) {
           Navigator.pushNamed(context, "/notificationPage");
         } else if (index == 3) {
-          Navigator.pushNamed(context, "/profilePage");
+          Navigator.pushNamed(context, "/contactPage");
         }
       },
       iconSize: 26,
@@ -129,7 +128,7 @@ class HomePage extends StatelessWidget {
         BottomNavigationBarItem(
             title: Text(""),
             icon: Icon(
-              FontAwesomeIcons.user,
+              FontAwesomeIcons.envelope,
               color: Colors.white,
               size: 20,
             )),
