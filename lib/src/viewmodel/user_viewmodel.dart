@@ -83,4 +83,16 @@ class UserViewModel with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> sendFirebaseTokenToServer(String token) async {
+    try {
+      state = UserState.Busy;
+      await _userRepository.sendFirebaseTokenToServer(user.uid, token);
+      state = UserState.Idle;
+      return true;
+    } catch (e) {
+      state = UserState.Idle;
+      return false;
+    }
+  }
 }

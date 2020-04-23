@@ -1,8 +1,10 @@
 import 'package:eventapp/src/model/user.dart';
 import 'package:eventapp/src/services/api/firebase_auth.dart';
+import 'package:eventapp/src/services/api/server_api.dart';
 
 class UserRepository {
   FirebaseAuthService _api = FirebaseAuthService();
+  ServerAPI _server = ServerAPI();
   Future<User> currentUser() async {
     return await _api.currentUser();
   }
@@ -22,5 +24,9 @@ class UserRepository {
 
   Future<void> resetPassword(String email) async {
     return await _api.resetPassword(email);
+  }
+
+  Future<void> sendFirebaseTokenToServer(String uid, String email) async {
+    return await _server.sendFirebaseTokenToServer(uid, email);
   }
 }

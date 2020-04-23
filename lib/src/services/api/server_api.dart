@@ -125,6 +125,7 @@ class ServerAPI {
     }
   }
 
+  //user
   Future<bool> userRegisterToDatabase(FirebaseUser user) async {
     try {
       var data = {
@@ -132,6 +133,18 @@ class ServerAPI {
         "email": user.email,
       };
       Response result = await Dio().post(registerUrl, data: data);
+      return true;
+    } catch (e) {
+      _toast.localizedMessageFromFirebase(e.code);
+      return false;
+    }
+  }
+
+  Future<bool> sendFirebaseTokenToServer(String uid, String token) async {
+    //TODO BACKEND FIX MORE THAN 64 CHAR
+    try {
+      var data = {"firebase_token": token};
+      Response result = await Dio().patch(userUrl + uid + "/edit/", data: data);
       return true;
     } catch (e) {
       _toast.localizedMessageFromFirebase(e.code);

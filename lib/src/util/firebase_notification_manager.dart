@@ -7,9 +7,13 @@ class FirebaseNotificationManager {
     this._firebaseMessaging = FirebaseMessaging();
     firebaseMessagingListeners();
   }
-  void firebaseMessagingListeners() {
-    _firebaseMessaging.getToken();
 
+  Future<String> getToken() async {
+    return await _firebaseMessaging.getToken();
+  }
+
+  void firebaseMessagingListeners() {
+    getToken();
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('on message $message');

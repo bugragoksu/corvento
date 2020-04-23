@@ -2,6 +2,7 @@ import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/services/local/sharedpref_manager.dart';
 import 'package:eventapp/src/ui/widget/featured_event_card.dart';
 import 'package:eventapp/src/ui/widget/upcoming_event_card.dart';
+import 'package:eventapp/src/util/firebase_notification_manager.dart';
 import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,12 +15,20 @@ class HomePage extends StatelessWidget {
   FeaturedEventViewModel _featuredEventViewModel;
   UserViewModel _userViewModel;
   SharedPrefManager pf = SharedPrefManager();
+  bool first = true;
+  sendToken() async {
+    FirebaseNotificationManager _notif = FirebaseNotificationManager();
+    String token = await _notif.getToken();
+    _userViewModel.sendFirebaseTokenToServer(token);
+  }
+
   @override
   Widget build(BuildContext context) {
     _eventViewModel = Provider.of<EventViewModel>(context);
     _featuredEventViewModel = Provider.of<FeaturedEventViewModel>(context);
     _userViewModel = Provider.of<UserViewModel>(context);
-
+    if (first) sendToken();
+    first = false;
     return Scaffold(
       backgroundColor: appColor,
       appBar: buildAppBar(context),
