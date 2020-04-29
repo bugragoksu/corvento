@@ -30,7 +30,7 @@ class NotificationCard extends StatelessWidget {
             children: <Widget>[
               Icon(
                 FontAwesomeIcons.infoCircle,
-                color: Colors.white,
+                color: iconColor,
                 size: 32,
               ),
               SizedBox(
@@ -38,7 +38,7 @@ class NotificationCard extends StatelessWidget {
               ),
               Text(
                 notification.title + " :",
-                style: TextStyle(color: Colors.white, fontSize: 14),
+                style: TextStyle(color: textColor, fontSize: 14),
               ),
               SizedBox(
                 width: 10,
@@ -46,7 +46,7 @@ class NotificationCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   notification.data,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: textColor, fontSize: 16),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -56,8 +56,8 @@ class NotificationCard extends StatelessWidget {
                   notificationViewModel
                       .deleteNotification(notification.documentID);
                 },
-                icon: Icon(FontAwesomeIcons.trashAlt,
-                    color: Colors.white, size: 16),
+                icon:
+                    Icon(FontAwesomeIcons.trashAlt, color: iconColor, size: 16),
               )
             ],
           ),

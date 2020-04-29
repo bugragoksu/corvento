@@ -11,14 +11,17 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _userViewModel = Provider.of<UserViewModel>(context);
-    return ChangeNotifierProvider<NotificationViewModel>(
-      create: (BuildContext context) =>
-          NotificationViewModel(uid: _userViewModel.user.uid),
+    return ChangeNotifierProvider<NotificationViewModel>.value(
+      value: NotificationViewModel(uid: _userViewModel.user.uid),
       child: Scaffold(
         backgroundColor: appColor,
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: iconColor, //change your color here
+          ),
           title: Text(
             "Bildirimler",
+            style: TextStyle(color: textColor),
           ),
           elevation: 0,
           backgroundColor: appColor,
@@ -33,7 +36,9 @@ class NotificationPage extends StatelessWidget {
         builder: (context, NotificationViewModel viewModel, Widget child) {
       if (viewModel.state == NotificationState.NotificationLoadingState ||
           viewModel.state == NotificationState.InitialNotificationState) {
-        return Center(child: CircularProgressIndicator());
+        return Center(
+            child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(iconColor)));
       } else if (viewModel.state == NotificationState.NotificationErrorState) {
         return Icon(FontAwesomeIcons.times, color: Colors.white, size: 32);
       } else {
@@ -45,14 +50,13 @@ class NotificationPage extends StatelessWidget {
               children: <Widget>[
                 Text(
                   "Henüz bildirim bulunmamaktadır",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: textColor),
                   overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Icon(FontAwesomeIcons.heartBroken,
-                    color: Colors.white, size: 36)
+                Icon(FontAwesomeIcons.heartBroken, color: iconColor, size: 36)
               ],
             ),
           );

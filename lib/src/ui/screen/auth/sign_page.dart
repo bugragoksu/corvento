@@ -70,10 +70,11 @@ class _SignPageState extends State<SignPage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 12,
                 ),
-                Center(child: Image.asset("assets/img/logo.png", height: 200)),
+                Center(child: Image.asset("assets/img/logo.png", height: 150)),
+                SizedBox(height: 50),
                 Text(
                   "Email",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
+                  style: TextStyle(color: textColor, fontSize: 22),
                 ),
                 SizedBox(
                   height: 10,
@@ -81,8 +82,8 @@ class _SignPageState extends State<SignPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Material(
-                    color: appTransparentColor,
-                    elevation: 1,
+                    color: appColor,
+                    elevation: 3,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
@@ -95,14 +96,13 @@ class _SignPageState extends State<SignPage> {
                         }
                         return null;
                       },
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: textColor),
                       onChanged: (value) {},
-                      cursorColor: appYellow,
+                      cursorColor: appTransparentColor,
                       decoration: InputDecoration(
-                          errorStyle: TextStyle(color: Colors.white70),
+                          errorStyle: TextStyle(color: textColor),
                           hintText: "Email",
-                          hintStyle:
-                              TextStyle(color: Colors.white70, fontSize: 14),
+                          hintStyle: TextStyle(color: textColor, fontSize: 14),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 25, vertical: 13)),
@@ -114,7 +114,7 @@ class _SignPageState extends State<SignPage> {
                 ),
                 Text(
                   "Şifre",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
+                  style: TextStyle(color: textColor, fontSize: 22),
                 ),
                 SizedBox(
                   height: 10,
@@ -122,8 +122,8 @@ class _SignPageState extends State<SignPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Material(
-                    color: appTransparentColor,
-                    elevation: 1,
+                    color: appColor,
+                    elevation: 3,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     child: TextFormField(
                       onSaved: (value) {
@@ -135,9 +135,9 @@ class _SignPageState extends State<SignPage> {
                         }
                         return null;
                       },
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: textColor),
                       onChanged: (value) {},
-                      cursorColor: appYellow,
+                      cursorColor: appTransparentColor,
                       obscureText: !_showPassword,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -150,13 +150,12 @@ class _SignPageState extends State<SignPage> {
                               _showPassword
                                   ? Icons.visibility_off
                                   : Icons.visibility,
-                              color: Colors.white,
+                              color: iconColor,
                             ),
                           ),
-                          errorStyle: TextStyle(color: Colors.white70),
+                          errorStyle: TextStyle(color: textColor),
                           hintText: "Şifrenizi giriniz",
-                          hintStyle:
-                              TextStyle(color: Colors.white70, fontSize: 14),
+                          hintStyle: TextStyle(color: textColor, fontSize: 14),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 25, vertical: 13)),
@@ -180,7 +179,7 @@ class _SignPageState extends State<SignPage> {
                         isLoginForm
                             ? "Henüz yeni misin?"
                             : "Hesabın var mı? Giriş Yap",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: textColor),
                       ),
                     ),
                     Spacer(),
@@ -191,7 +190,7 @@ class _SignPageState extends State<SignPage> {
                             },
                             child: Text(
                               "Şifremi unuttum",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: textColor),
                             ),
                           )
                         : Container()
@@ -207,25 +206,29 @@ class _SignPageState extends State<SignPage> {
 
   Widget buildButton(context) {
     if (_userViewModel.state == UserState.Busy) {
-      return Center(child: CircularProgressIndicator());
+      return Center(
+          child: CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(iconColor)));
     } else {
-      return MaterialButton(
-          padding: const EdgeInsets.all(.0),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          child: Text(
-            isLoginForm ? "Giriş Yap" : "Kayıt Ol",
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
+      return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: MaterialButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Text(
+              isLoginForm ? "Giriş Yap" : "Kayıt Ol",
+              style: TextStyle(
+                fontSize: 20,
+                color: textColor,
+              ),
             ),
-          ),
-          color: Colors.yellow.shade700,
-          height: 40,
-          minWidth: double.infinity,
-          onPressed: () {
-            _formSubmit();
-          });
+            color: appTransparentColor,
+            height: 40,
+            minWidth: double.infinity,
+            onPressed: () {
+              _formSubmit();
+            }),
+      );
     }
   }
 
@@ -237,13 +240,12 @@ class _SignPageState extends State<SignPage> {
             backgroundColor: appColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            title:
-                Text("Reset Password", style: TextStyle(color: Colors.white)),
+            title: Text("Reset Password", style: TextStyle(color: textColor)),
             content: Form(
               key: _resetPassFormKey,
               child: Material(
-                color: appTransparentColor,
-                elevation: 1,
+                color: appColor,
+                elevation: 3,
                 borderRadius: BorderRadius.all(Radius.circular(15)),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
@@ -256,12 +258,12 @@ class _SignPageState extends State<SignPage> {
                     }
                     return null;
                   },
-                  style: TextStyle(color: Colors.white),
-                  cursorColor: appYellow,
+                  style: TextStyle(color: textColor),
+                  cursorColor: appTransparentColor,
                   decoration: InputDecoration(
-                      errorStyle: TextStyle(color: Colors.white70),
+                      errorStyle: TextStyle(color: textColor),
                       hintText: "Email",
-                      hintStyle: TextStyle(color: Colors.white70, fontSize: 14),
+                      hintStyle: TextStyle(color: textColor, fontSize: 14),
                       border: InputBorder.none,
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
@@ -270,9 +272,12 @@ class _SignPageState extends State<SignPage> {
             ),
             actions: <Widget>[
               FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  color: appTransparentColor,
                   child: Text(
                     "Gönder",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(color: textColor, fontSize: 18),
                   ),
                   onPressed: () async {
                     if (_resetPassFormKey.currentState.validate()) {

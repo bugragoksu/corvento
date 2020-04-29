@@ -1,3 +1,4 @@
+import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/services/local/sharedpref_manager.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,12 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
     });
   }
 
+  double height, width;
+
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     if (widget.e == null) {
       return CircularProgressIndicator();
     }
@@ -52,7 +57,7 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
         Navigator.pushNamed(context, "/eventDetailPage", arguments: widget.e);
       },
       child: Card(
-        elevation: 0,
+        elevation: 3,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         child: Column(
@@ -60,12 +65,11 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 160,
-              width: double.infinity,
+              height: height / 3.5,
               child: Stack(
                 children: <Widget>[
                   Container(
-                    width: double.infinity,
+                    width: width,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: Image.network(
@@ -85,7 +89,7 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
                       width: 40,
                       height: 50,
                       child: Card(
-                          color: Colors.yellowAccent.shade700,
+                          color: appColor,
                           elevation: 0,
                           child: IconButton(
                               onPressed: () {
@@ -94,12 +98,12 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
                               icon: isSaved
                                   ? Icon(
                                       FontAwesomeIcons.solidBookmark,
-                                      color: Colors.black,
+                                      color: iconColor,
                                       size: 20,
                                     )
                                   : Icon(
                                       FontAwesomeIcons.bookmark,
-                                      color: Colors.black,
+                                      color: iconColor,
                                       size: 20,
                                     ))),
                     ),
@@ -113,23 +117,22 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Text(widget.e.title,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Expanded(
+                    child: Text(widget.e.title,
+                        overflow: TextOverflow.fade,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                  ),
                   Spacer(),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    color: Colors.yellowAccent.shade700,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(widget.e.category.name,
-                          style: TextStyle(
-                            fontSize: 14,
-                          )),
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(widget.e.category.name,
+                        style: TextStyle(
+                          fontSize: 14,
+                        )),
                   )
                 ],
               ),
@@ -159,6 +162,7 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
 
   Card featuredEventDateCard() {
     return Card(
+      color: appTransparentColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       elevation: 0,
       child: Container(
@@ -169,11 +173,11 @@ class _FeaturedEventCardState extends State<FeaturedEventCard> {
           children: <Widget>[
             Text(
               widget.e.getDayNumber(),
-              style: TextStyle(color: Colors.black, fontSize: 18),
+              style: TextStyle(color: textColor, fontSize: 18),
             ),
             Text(
               widget.e.getMonthName(),
-              style: TextStyle(color: Colors.black, fontSize: 14),
+              style: TextStyle(color: textColor, fontSize: 14),
             ),
           ],
         ),

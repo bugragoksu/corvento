@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/model/event.dart';
 import 'package:eventapp/src/services/local/sharedpref_manager.dart';
@@ -67,6 +66,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: appColor,
       body: Stack(
@@ -85,7 +85,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               width: 40,
               height: 50,
               child: Card(
-                  color: Colors.yellowAccent.shade700,
+                  color: appColor,
                   elevation: 0,
                   child: IconButton(
                       onPressed: () {
@@ -94,12 +94,12 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       icon: isSaved
                           ? Icon(
                               FontAwesomeIcons.solidBookmark,
-                              color: Colors.black,
+                              color: iconColor,
                               size: 20,
                             )
                           : Icon(
                               FontAwesomeIcons.bookmark,
-                              color: Colors.black,
+                              color: iconColor,
                               size: 20,
                             ))),
             ),
@@ -111,7 +111,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               width: 40,
               height: 50,
               child: Card(
-                  color: Colors.yellowAccent.shade700,
+                  color: appColor,
                   elevation: 0,
                   child: IconButton(
                       onPressed: () {
@@ -119,7 +119,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       },
                       icon: Icon(
                         FontAwesomeIcons.calendarPlus,
-                        color: Colors.black,
+                        color: iconColor,
                         size: 20,
                       ))),
             ),
@@ -131,18 +131,18 @@ class _EventDetailPageState extends State<EventDetailPage> {
               width: 40,
               height: 50,
               child: Card(
-                  color: Colors.yellowAccent.shade700,
+                  color: appColor,
                   elevation: 0,
                   child: IconButton(
                       onPressed: () {
                         Share.share(
-                          "corvento | Yeni bir etkinlik var! Göz atmak ister misin?\n " +
+                          "Corvento | Yeni bir etkinlik var! Göz atmak ister misin?\n " +
                               widget.event.title,
                         );
                       },
                       icon: Icon(
                         FontAwesomeIcons.shareAlt,
-                        color: Colors.black,
+                        color: iconColor,
                         size: 20,
                       ))),
             ),
@@ -158,7 +158,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       borderRadius: BorderRadius.circular(10.0)),
                   child: Icon(FontAwesomeIcons.arrowLeft),
                   color: appColor,
-                  textColor: Colors.white,
+                  textColor: textColor,
                   minWidth: 0,
                   height: 40,
                   onPressed: () => Navigator.pop(context),
@@ -168,208 +168,182 @@ class _EventDetailPageState extends State<EventDetailPage> {
             SizedBox(
               height: 125,
             ),
-            Expanded(
-              child: Container(
+            Container(
                 padding: EdgeInsets.only(left: 10),
-                width: double.infinity,
+                height: height / 1.5,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: appTransparentColor),
+                    borderRadius: BorderRadius.circular(20.0), color: appColor),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const SizedBox(height: 30.0),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              widget.event.title,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  "Düzenleyen :",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Text(
+                        widget.event.title,
+                        style: TextStyle(
+                            color: textColor,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "Düzenleyen :",
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 16,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          widget.event.community,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        LimitedBox(
+                          child: Card(
+                            elevation: 2,
+                            color: appColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    FontAwesomeIcons.calendar,
+                                    color: iconColor,
+                                    size: 16,
                                   ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  widget.event.author.firstName,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                LimitedBox(
-                                  child: Card(
-                                    color: Colors.yellowAccent.shade700,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Icon(
-                                            FontAwesomeIcons.calendar,
-                                            color: Colors.black,
-                                            size: 16,
-                                          ),
-                                          SizedBox(width: 5),
-                                          Text(widget.event.getDate(),
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                              ),
-                                              overflow: TextOverflow.ellipsis)
-                                        ],
+                                  SizedBox(width: 5),
+                                  Text(widget.event.getDate(),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: textColor,
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                LimitedBox(
-                                  child: Card(
-                                    color: Colors.yellowAccent.shade700,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Icon(
-                                            FontAwesomeIcons.clock,
-                                            color: Colors.black,
-                                            size: 16,
-                                          ),
-                                          SizedBox(width: 5),
-                                          Text(widget.event.getTime(),
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black),
-                                              overflow: TextOverflow.ellipsis)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                LimitedBox(
-                                  child: Card(
-                                    color: Colors.yellowAccent.shade700,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Icon(
-                                            FontAwesomeIcons.mapMarkerAlt,
-                                            color: Colors.black,
-                                            size: 16,
-                                          ),
-                                          SizedBox(width: 5),
-                                          Text(widget.event.venue,
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black),
-                                              overflow: TextOverflow.ellipsis),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text("Etkinlik Detayı",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                ),
-                                overflow: TextOverflow.ellipsis),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              widget.event.desc,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
+                                      overflow: TextOverflow.ellipsis)
+                                ],
                               ),
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: 10.0, right: 10),
-                              child: Center(
-                                child: MaterialButton(
-                                  padding: const EdgeInsets.all(.0),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  child: Text(
-                                    "Etkinlik Sitesi",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                    ),
+                          ),
+                        ),
+                        LimitedBox(
+                          child: Card(
+                            elevation: 2,
+                            color: appColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    FontAwesomeIcons.clock,
+                                    color: iconColor,
+                                    size: 16,
                                   ),
-                                  color: Colors.yellow.shade700,
-                                  height: 40,
-                                  minWidth: double.infinity,
-                                  onPressed: () {
-                                    launchURL();
-                                  },
-                                ),
+                                  SizedBox(width: 5),
+                                  Text(widget.event.getTime(),
+                                      style: TextStyle(
+                                          fontSize: 16, color: textColor),
+                                      overflow: TextOverflow.ellipsis),
+                                ],
                               ),
                             ),
-                          ],
+                          ),
+                        ),
+                        LimitedBox(
+                          child: Card(
+                            elevation: 2,
+                            color: appColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    FontAwesomeIcons.mapMarkerAlt,
+                                    color: iconColor,
+                                    size: 16,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(widget.event.venue,
+                                      style: TextStyle(
+                                          fontSize: 16, color: textColor),
+                                      overflow: TextOverflow.ellipsis),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text("Etkinlik Detayı",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: textColor,
+                        ),
+                        overflow: TextOverflow.ellipsis),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    SingleChildScrollView(
+                      child: Text(
+                        widget.event.desc,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey,
                         ),
                       ),
-                    )
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0, right: 10),
+                      child: Center(
+                        child: MaterialButton(
+                          padding: const EdgeInsets.all(.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: Text(
+                            "Etkinlik Sitesi",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: textColor,
+                            ),
+                          ),
+                          color: appTransparentColor,
+                          height: 40,
+                          minWidth: double.infinity,
+                          onPressed: () {
+                            launchURL();
+                          },
+                        ),
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            )
+                )),
           ]))
         ],
       ),

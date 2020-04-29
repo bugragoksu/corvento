@@ -1,7 +1,6 @@
 import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/services/local/sharedpref_manager.dart';
-import 'package:eventapp/src/ui/widget/featured_event_card.dart';
-import 'package:eventapp/src/ui/widget/upcoming_event_card.dart';
+import 'package:eventapp/src/ui/widget/event_card.dart';
 import 'package:eventapp/src/util/firebase_notification_manager.dart';
 import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +15,8 @@ class HomePage extends StatelessWidget {
   UserViewModel _userViewModel;
   SharedPrefManager pf = SharedPrefManager();
   bool first = true;
+  double height, width;
+
   sendToken() async {
     FirebaseNotificationManager _notif = FirebaseNotificationManager();
     String token = await _notif.getToken();
@@ -27,6 +28,8 @@ class HomePage extends StatelessWidget {
     _eventViewModel = Provider.of<EventViewModel>(context);
     _featuredEventViewModel = Provider.of<FeaturedEventViewModel>(context);
     _userViewModel = Provider.of<UserViewModel>(context);
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     if (first) sendToken();
     first = false;
     return Scaffold(
@@ -35,35 +38,40 @@ class HomePage extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(10),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             buildNamesRow(context, "Öne Çıkan Etkinlik", "Tümünü Gör", 1),
+            SizedBox(
+              height: 5,
+            ),
             _featuredEventViewModel.featuredEventList.length > 0
-                ? FeaturedEventCard(
-                    e: _featuredEventViewModel.featuredEventList[0])
-                : CircularProgressIndicator(),
+                ? EventCard(
+                    event: _featuredEventViewModel.featuredEventList[0],
+                    containerWidth: double.infinity,
+                    imageWidth: double.infinity,
+                    containerHeight: height / 3,
+                    imageHeigt: height / 5)
+                : CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(iconColor)),
             SizedBox(
               height: 10,
             ),
             buildNamesRow(context, "Yaklaşan Etkinlikler", "Tümünü Gör", 2),
+            SizedBox(
+              height: 5,
+            ),
             Expanded(
               child: ListView.builder(
-                itemCount: _eventViewModel.eventList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if (_eventViewModel.state == EventState.EventLoadingState ||
-                      _eventViewModel.state == EventState.InitialEventState) {
-                    return CircularProgressIndicator();
-                  } else if (_eventViewModel.state ==
-                      EventState.EventErrorState) {
-                    return Icon(FontAwesomeIcons.times,
-                        color: Colors.white, size: 32);
-                  } else {
-                    return UpcomingEventCard(
-                        event: _eventViewModel.eventList[index]);
-                  }
-                },
-              ),
-            )
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _eventViewModel.eventList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return EventCard(
+                        event: _eventViewModel.eventList[index],
+                        containerWidth: width / 1.5,
+                        imageWidth: width / 1.5,
+                        containerHeight: height / 3.5,
+                        imageHeigt: height / 5);
+                  }),
+            ),
           ],
         ),
       ),
@@ -76,22 +84,27 @@ class HomePage extends StatelessWidget {
       children: <Widget>[
         Text(
           title,
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: textColor, fontSize: 18),
         ),
         Spacer(),
-        RaisedButton(
-          elevation: 0,
-          onPressed: () {
-            if (isFeatured == 1) {
-              Navigator.pushNamed(context, "/featuredEvents");
-            } else {
-              Navigator.pushNamed(context, "/upcomingEvents");
-            }
-          },
-          color: appColor,
-          child: Text(
-            showAll,
-            style: TextStyle(color: Colors.white, fontSize: 14),
+        Container(
+          height: 20,
+          width: 110,
+          child: FlatButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
+            onPressed: () {
+              if (isFeatured == 1) {
+                Navigator.pushNamed(context, "/featuredEvents");
+              } else {
+                Navigator.pushNamed(context, "/upcomingEvents");
+              }
+            },
+            color: appTransparentColor,
+            child: Text(
+              showAll,
+              style: TextStyle(color: Colors.black, fontSize: 14),
+            ),
           ),
         ),
       ],
@@ -100,6 +113,8 @@ class HomePage extends StatelessWidget {
 
   BottomNavigationBar buildBottomNavigationBar(context) {
     return BottomNavigationBar(
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
       type: BottomNavigationBarType.fixed,
       backgroundColor: appColor,
       onTap: (index) async {
@@ -119,26 +134,26 @@ class HomePage extends StatelessWidget {
             title: Text(""),
             icon: Icon(
               Icons.home,
-              color: Colors.white,
+              color: iconColor,
             )),
         BottomNavigationBarItem(
             title: Text(""),
             icon: Icon(
               Icons.bookmark_border,
-              color: Colors.white,
+              color: iconColor,
             )),
         BottomNavigationBarItem(
             title: Text(""),
             icon: Icon(
               FontAwesomeIcons.bell,
-              color: Colors.white,
+              color: iconColor,
               size: 20,
             )),
         BottomNavigationBarItem(
             title: Text(""),
             icon: Icon(
               FontAwesomeIcons.envelope,
-              color: Colors.white,
+              color: iconColor,
               size: 20,
             )),
       ],
@@ -147,7 +162,8 @@ class HomePage extends StatelessWidget {
 
   AppBar buildAppBar(context) => AppBar(
         title: Text(
-          "corvento",
+          "Corvento",
+          style: TextStyle(fontFamily: 'Gilroy-Bold', color: textColor),
         ),
         elevation: 0,
         backgroundColor: appColor,
@@ -156,7 +172,7 @@ class HomePage extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, "/categoryPage");
             },
-            icon: Icon(FontAwesomeIcons.thLarge, size: 18, color: Colors.white),
+            icon: Icon(FontAwesomeIcons.thLarge, size: 18, color: iconColor),
           ),
         ],
       );

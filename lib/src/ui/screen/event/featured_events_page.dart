@@ -1,5 +1,5 @@
 import 'package:eventapp/src/config/constant.dart';
-import 'package:eventapp/src/ui/widget/upcoming_event_card.dart';
+import 'package:eventapp/src/ui/widget/event_card.dart';
 import 'package:eventapp/src/viewmodel/event_viewmodel.dart';
 import 'package:eventapp/src/viewmodel/featured_event_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -9,15 +9,19 @@ import 'package:provider/provider.dart';
 class FeaturedEventsPage extends StatelessWidget {
   TextEditingController _editingController = TextEditingController();
   FeaturedEventViewModel _eventViewModel;
+  double height;
   @override
   Widget build(BuildContext context) {
     _eventViewModel = Provider.of<FeaturedEventViewModel>(context);
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: appColor,
       appBar: AppBar(
-        title: Text(
-          "Önce Çıkan Etkinlikler",
+        iconTheme: IconThemeData(
+          color: iconColor, //change your color here
         ),
+        title:
+            Text("Önce Çıkan Etkinlikler", style: TextStyle(color: textColor)),
         elevation: 0,
         backgroundColor: appColor,
       ),
@@ -29,10 +33,6 @@ class FeaturedEventsPage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            // datesRow(),
-            // SizedBox(
-            //   height: 20,
-            // ),
             Expanded(
               child: ListView.builder(
                 itemCount: _eventViewModel.featuredEventList.length,
@@ -45,8 +45,12 @@ class FeaturedEventsPage extends StatelessWidget {
                     return Icon(FontAwesomeIcons.times,
                         color: Colors.white, size: 32);
                   } else {
-                    return UpcomingEventCard(
-                        event: _eventViewModel.featuredEventList[index]);
+                    return EventCard(
+                        event: _eventViewModel.featuredEventList[index],
+                        containerWidth: double.infinity,
+                        imageWidth: double.infinity,
+                        containerHeight: height / 3,
+                        imageHeigt: height / 5);
                   }
                 },
               ),
@@ -57,166 +61,36 @@ class FeaturedEventsPage extends StatelessWidget {
     );
   }
 
-  Row datesRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        Container(
-          width: 45,
-          height: 60,
-          child: Card(
-            color: appColor,
-            elevation: 0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "16",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text("Pzt", style: TextStyle(color: Colors.white))
-              ],
-            ),
-          ),
+  Padding searchBox() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        color: appColor,
+        elevation: 2,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        child: TextField(
+          style: TextStyle(color: textColor),
+          controller: _editingController,
+          onChanged: (value) {
+            if (value.length >= 3) {
+              _eventViewModel.search(value.trim());
+            }
+            if (value.length == 0) {
+              _eventViewModel.getFeaturedEvents();
+            }
+          },
+          cursorColor: appYellow,
+          decoration: InputDecoration(
+              hintText: "Ara",
+              hintStyle: TextStyle(color: textColor),
+              prefixIcon: Icon(
+                Icons.search,
+                color: iconColor,
+              ),
+              border: InputBorder.none,
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
         ),
-        Container(
-          width: 45,
-          height: 60,
-          child: Card(
-            color: appColor,
-            elevation: 0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "16",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text("Pzt", style: TextStyle(color: Colors.white))
-              ],
-            ),
-          ),
-        ),
-        Container(
-          width: 45,
-          height: 60,
-          child: Card(
-            color: Colors.yellowAccent.shade700,
-            elevation: 0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "16",
-                  style: TextStyle(color: Colors.black),
-                ),
-                Text("Pzt", style: TextStyle(color: Colors.black))
-              ],
-            ),
-          ),
-        ),
-        Container(
-          width: 45,
-          height: 60,
-          child: Card(
-            color: appColor,
-            elevation: 0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "16",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text("Pzt", style: TextStyle(color: Colors.white))
-              ],
-            ),
-          ),
-        ),
-        Container(
-          width: 45,
-          height: 60,
-          child: Card(
-            color: appColor,
-            elevation: 0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "16",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text("Pzt", style: TextStyle(color: Colors.white))
-              ],
-            ),
-          ),
-        ),
-        Container(
-          width: 45,
-          height: 60,
-          child: Card(
-            color: appColor,
-            elevation: 0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "16",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text("Pzt", style: TextStyle(color: Colors.white))
-              ],
-            ),
-          ),
-        ),
-        Container(
-          width: 45,
-          height: 60,
-          child: Card(
-            color: appColor,
-            elevation: 0,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "16",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text("Pzt", style: TextStyle(color: Colors.white))
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Material searchBox() {
-    return Material(
-      color: appTransparentColor,
-      elevation: 1,
-      borderRadius: BorderRadius.all(Radius.circular(15)),
-      child: TextField(
-        style: TextStyle(color: Colors.white),
-        controller: _editingController,
-        onChanged: (value) {
-          if (value.length >= 3) {
-            _eventViewModel.search(value.trim());
-          }
-          if (value.length == 0) {
-            _eventViewModel.getFeaturedEvents();
-          }
-        },
-        cursorColor: appYellow,
-        decoration: InputDecoration(
-            hintText: "Ara",
-            hintStyle: TextStyle(color: Colors.white),
-            prefixIcon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
       ),
     );
   }

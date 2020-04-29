@@ -16,17 +16,18 @@ class Event {
   // final String author;
   final Author author;
   final Category category;
-  Event({
-    this.id,
-    this.title,
-    this.desc,
-    this.category,
-    this.date,
-    this.eventUrl,
-    this.imageUrl,
-    this.venue,
-    this.author,
-  });
+  final String community;
+  Event(
+      {this.id,
+      this.title,
+      this.desc,
+      this.category,
+      this.date,
+      this.eventUrl,
+      this.imageUrl,
+      this.venue,
+      this.author,
+      this.community});
 
   factory Event.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;
@@ -48,6 +49,7 @@ class Event {
         desc: json["desc"] ?? '',
         imageUrl: json["image"] ?? '',
         venue: json["venue"] ?? '',
+        community: json['community'] ?? '',
         date: DateTime.parse(json['date']) ?? DateTime.now(),
         category: Category.fromJson(json["category"]) ?? null,
         author: Author.fromJson(json["author"]) ?? null,

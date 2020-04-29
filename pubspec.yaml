@@ -44,8 +44,13 @@ flutter:
     - assets/img/
     - assets/fonts/
     - assets/fonts/Roboto/
+    - assets/fonts/Gilroy/
 
   fonts:
     - family: Roboto
       fonts:
         - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+    - family: Gilroy
+      fonts:
+        - asset: assets/fonts/Gilroy/Gilroy-Regular.otf
+        - asset: assets/fonts/Gilroy/Gilroy-Bold.otf

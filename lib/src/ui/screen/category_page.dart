@@ -15,10 +15,14 @@ class CategoryPage extends StatelessWidget {
     return Scaffold(
         backgroundColor: appColor,
         appBar: AppBar(
+          elevation: 0,
+          iconTheme: IconThemeData(
+            color: iconColor, //change your color here
+          ),
           backgroundColor: appColor,
           title: Text(
             "Kategoriler",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: textColor),
           ),
         ),
         body: body());
@@ -32,10 +36,12 @@ class CategoryPage extends StatelessWidget {
         ),
       );
     } else if (_categoryViewModel.state == CategoryState.CategoryLoadingState) {
-      return Center(child: CircularProgressIndicator());
+      return Center(
+          child: CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(iconColor)));
     } else {
       return Center(
-        child: Icon(FontAwesomeIcons.times, color: Colors.white, size: 46),
+        child: Icon(FontAwesomeIcons.times, color: iconColor, size: 46),
       );
     }
   }
@@ -59,14 +65,13 @@ class CategoryPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(FontAwesomeIcons.terminal,
-                        color: Colors.white, size: 36),
+                    Icon(FontAwesomeIcons.terminal, color: textColor, size: 36),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
                       _categoryViewModel.categoryList[index].name,
-                      style: TextStyle(color: Colors.white, fontSize: 24),
+                      style: TextStyle(color: textColor, fontSize: 24),
                     )
                   ],
                 ),

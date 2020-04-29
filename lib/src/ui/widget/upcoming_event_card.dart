@@ -6,27 +6,29 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class UpcomingEventCard extends StatelessWidget {
   final Event event;
   UpcomingEventCard({@required this.event});
-
+  double height, width;
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, "/eventDetailPage", arguments: this.event);
       },
       child: Container(
         padding: EdgeInsets.all(8),
-        height: 120,
-        width: double.infinity,
+        width: width / 2,
         color: appColor,
         child: Card(
+          elevation: 3,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           color: appTransparentColor,
           child: Row(
             children: <Widget>[
               Container(
-                height: double.infinity,
                 width: 125,
+                height: height / 4,
                 child: ClipRRect(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15),
@@ -41,6 +43,7 @@ class UpcomingEventCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Text(
@@ -48,7 +51,7 @@ class UpcomingEventCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: textColor,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -56,39 +59,36 @@ class UpcomingEventCard extends StatelessWidget {
                         children: <Widget>[
                           Icon(
                             FontAwesomeIcons.calendar,
-                            color: Colors.white,
+                            color: iconColor,
                             size: 12,
                           ),
                           SizedBox(width: 5),
                           Text(event.getDate(),
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.white))
+                              style: TextStyle(fontSize: 12, color: textColor))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           Icon(
                             FontAwesomeIcons.clock,
-                            color: Colors.white,
+                            color: iconColor,
                             size: 12,
                           ),
                           SizedBox(width: 5),
                           Text(event.getTime(),
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.white))
+                              style: TextStyle(fontSize: 12, color: textColor))
                         ],
                       ),
                       Row(
                         children: <Widget>[
                           Icon(
                             FontAwesomeIcons.mapMarkerAlt,
-                            color: Colors.white,
+                            color: iconColor,
                             size: 12,
                           ),
                           SizedBox(width: 5),
                           Text(event.venue,
-                              style:
-                                  TextStyle(fontSize: 12, color: Colors.white)),
+                              style: TextStyle(fontSize: 12, color: textColor)),
                         ],
                       ),
                     ],

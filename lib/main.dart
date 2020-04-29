@@ -15,23 +15,23 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    // SystemChrome.setSystemUIOverlayStyle(
+    //     SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     FirebaseNotificationManager _firebaseMessaging =
         FirebaseNotificationManager();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<EventViewModel>(
-          create: (context) => EventViewModel(),
+        ChangeNotifierProvider<EventViewModel>.value(
+          value: EventViewModel(),
         ),
-        ChangeNotifierProvider<FeaturedEventViewModel>(
-          create: (context) => FeaturedEventViewModel(),
+        ChangeNotifierProvider<FeaturedEventViewModel>.value(
+          value: FeaturedEventViewModel(),
         ),
-        ChangeNotifierProvider<CategoryViewModel>(
-          create: (context) => CategoryViewModel(),
+        ChangeNotifierProvider<CategoryViewModel>.value(
+          value: CategoryViewModel(),
         ),
-        ChangeNotifierProvider<UserViewModel>(
-          create: (context) => UserViewModel(),
+        ChangeNotifierProvider<UserViewModel>.value(
+          value: UserViewModel(),
         ),
       ],
       child: MaterialApp(
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         title: 'Evento',
         theme: ThemeData(
             primarySwatch: Colors.blue,
-            textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Roboto')),
+            textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Gilroy')),
         onGenerateRoute: Router.generateRoute,
         initialRoute: '/',
       ),

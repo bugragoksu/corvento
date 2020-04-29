@@ -26,9 +26,10 @@ class ContactPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: appColor,
       appBar: AppBar(
-        title: Text(
-          "İletişim",
+        iconTheme: IconThemeData(
+          color: iconColor,
         ),
+        title: Text("İletişim", style: TextStyle(color: textColor)),
         elevation: 0,
         backgroundColor: appColor,
       ),
@@ -50,82 +51,90 @@ class ContactPage extends StatelessWidget {
           children: <Widget>[
             Text(
               "Bizimle iletişime geçin",
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: TextStyle(color: textColor, fontSize: 18),
             ),
             SizedBox(
               height: 20,
             ),
-            Material(
-              color: appTransparentColor,
-              elevation: 1,
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              child: TextFormField(
-                onSaved: (value) {},
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Lütfen bir konu belirtiniz';
-                  }
-                  return null;
-                },
-                style: TextStyle(color: Colors.white),
-                onChanged: (value) {},
-                cursorColor: appYellow,
-                decoration: InputDecoration(
-                    errorStyle: TextStyle(color: Colors.white70),
-                    hintText: "Konu",
-                    hintStyle: TextStyle(color: Colors.white70, fontSize: 14),
-                    border: InputBorder.none,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Material(
+                color: appColor,
+                elevation: 2,
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                child: TextFormField(
+                  onSaved: (value) {},
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Lütfen bir konu belirtiniz';
+                    }
+                    return null;
+                  },
+                  style: TextStyle(color: textColor),
+                  onChanged: (value) {},
+                  cursorColor: appYellow,
+                  decoration: InputDecoration(
+                      errorStyle: TextStyle(color: textColor),
+                      hintText: "Konu",
+                      hintStyle: TextStyle(color: textColor, fontSize: 14),
+                      border: InputBorder.none,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
+                ),
               ),
             ),
             SizedBox(
               height: 20,
             ),
-            Material(
-              color: appTransparentColor,
-              elevation: 1,
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              child: TextFormField(
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                onSaved: (value) {},
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Lütfen mesajınızı belirtiniz';
-                  }
-                  return null;
-                },
-                style: TextStyle(color: Colors.white),
-                onChanged: (value) {},
-                cursorColor: appYellow,
-                decoration: InputDecoration(
-                    errorStyle: TextStyle(color: Colors.white70),
-                    hintText: "Mesajınız",
-                    hintStyle: TextStyle(color: Colors.white70, fontSize: 14),
-                    border: InputBorder.none,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Material(
+                color: appColor,
+                elevation: 2,
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                child: TextFormField(
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  onSaved: (value) {},
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Lütfen mesajınızı belirtiniz';
+                    }
+                    return null;
+                  },
+                  style: TextStyle(color: textColor),
+                  onChanged: (value) {},
+                  cursorColor: appYellow,
+                  decoration: InputDecoration(
+                      errorStyle: TextStyle(color: textColor),
+                      hintText: "Mesajınız",
+                      hintStyle: TextStyle(color: textColor, fontSize: 14),
+                      border: InputBorder.none,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 25, vertical: 13)),
+                ),
               ),
             ),
             SizedBox(height: 20),
-            MaterialButton(
-                padding: const EdgeInsets.all(.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Text(
-                  "Gönder",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: MaterialButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: Text(
+                    "Gönder",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: textColor,
+                    ),
                   ),
-                ),
-                color: Colors.yellow.shade700,
-                height: 40,
-                minWidth: double.infinity,
-                onPressed: () async {}),
+                  color: appTransparentColor,
+                  height: 40,
+                  minWidth: double.infinity,
+                  onPressed: () async {}),
+            ),
             Divider(
-              color: Colors.white,
+              color: iconColor,
             ),
             SizedBox(height: 20),
             Row(
@@ -135,29 +144,27 @@ class ContactPage extends StatelessWidget {
                   onPressed: () {
                     launchURL(instagramUrl);
                   },
-                  icon: Icon(FontAwesomeIcons.instagram, color: Colors.white),
+                  icon: Icon(FontAwesomeIcons.instagram, color: iconColor),
                 ),
                 IconButton(
                   onPressed: () {
                     launchURL(twitterUrl);
                   },
-                  icon: Icon(FontAwesomeIcons.twitter, color: Colors.white),
+                  icon: Icon(FontAwesomeIcons.twitter, color: iconColor),
                 ),
                 IconButton(
                   onPressed: () {
                     launchURL(webUrl);
                   },
-                  icon: Icon(FontAwesomeIcons.globe, color: Colors.white),
+                  icon: Icon(FontAwesomeIcons.globe, color: iconColor),
                 ),
               ],
             ),
-            SizedBox(height: height / 3),
+            SizedBox(height: height / 4),
             Center(
               child: Text(
-                appName + " " + appVersion,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+                appName + " | " + appVersion,
+                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(height: 10),
@@ -170,10 +177,10 @@ class ContactPage extends StatelessWidget {
                     "Çıkış Yap",
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: textColor,
                     ),
                   ),
-                  color: Colors.yellow.shade700,
+                  color: appTransparentColor,
                   height: 40,
                   minWidth: 150,
                   onPressed: () async {

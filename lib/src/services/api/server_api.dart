@@ -141,7 +141,6 @@ class ServerAPI {
   }
 
   Future<bool> sendFirebaseTokenToServer(String uid, String token) async {
-    //TODO BACKEND FIX MORE THAN 64 CHAR
     try {
       var data = {"firebase_token": token};
       Response result = await Dio().patch(userUrl + uid + "/edit/", data: data);

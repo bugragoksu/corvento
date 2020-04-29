@@ -1,6 +1,4 @@
 import 'package:eventapp/src/config/constant.dart';
-import 'package:eventapp/src/ui/screen/auth/sign_page.dart';
-import 'package:eventapp/src/ui/screen/home_page.dart';
 import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -25,6 +23,9 @@ class SplashPage extends StatelessWidget {
       }
     }
     return Container(
-        color: appColor, child: Center(child: CircularProgressIndicator()));
+        color: appColor,
+        child: Center(
+            child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(iconColor))));
   }
 }
