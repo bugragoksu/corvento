@@ -21,7 +21,7 @@ class NotificationCard extends StatelessWidget {
       color: appColor,
       height: 75,
       child: Card(
-        color: appTransparentColor,
+        color: appYellow,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Padding(

@@ -85,7 +85,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               width: 40,
               height: 50,
               child: Card(
-                  color: appColor,
+                  color: Colors.transparent,
                   elevation: 0,
                   child: IconButton(
                       onPressed: () {
@@ -94,12 +94,12 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       icon: isSaved
                           ? Icon(
                               FontAwesomeIcons.solidBookmark,
-                              color: iconColor,
+                              color: appYellow,
                               size: 20,
                             )
                           : Icon(
                               FontAwesomeIcons.bookmark,
-                              color: iconColor,
+                              color: appYellow,
                               size: 20,
                             ))),
             ),
@@ -111,7 +111,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               width: 40,
               height: 50,
               child: Card(
-                  color: appColor,
+                  color: Colors.transparent,
                   elevation: 0,
                   child: IconButton(
                       onPressed: () {
@@ -119,7 +119,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       },
                       icon: Icon(
                         FontAwesomeIcons.calendarPlus,
-                        color: iconColor,
+                        color: appYellow,
                         size: 20,
                       ))),
             ),
@@ -131,7 +131,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
               width: 40,
               height: 50,
               child: Card(
-                  color: appColor,
+                  color: Colors.transparent,
                   elevation: 0,
                   child: IconButton(
                       onPressed: () {
@@ -142,7 +142,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                       },
                       icon: Icon(
                         FontAwesomeIcons.shareAlt,
-                        color: iconColor,
+                        color: appYellow,
                         size: 20,
                       ))),
             ),
@@ -333,7 +333,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                               color: textColor,
                             ),
                           ),
-                          color: appTransparentColor,
+                          color: appYellow,
                           height: 40,
                           minWidth: double.infinity,
                           onPressed: () {

@@ -1,7 +1,9 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/services/local/sharedpref_manager.dart';
 import 'package:eventapp/src/ui/widget/event_card.dart';
 import 'package:eventapp/src/util/firebase_notification_manager.dart';
+import 'package:eventapp/src/util/toast_manager.dart';
 import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,6 +18,7 @@ class HomePage extends StatelessWidget {
   SharedPrefManager pf = SharedPrefManager();
   bool first = true;
   double height, width;
+  ToastManager _toast = ToastManager();
 
   sendToken() async {
     FirebaseNotificationManager _notif = FirebaseNotificationManager();
@@ -23,8 +26,20 @@ class HomePage extends StatelessWidget {
     _userViewModel.sendFirebaseTokenToServer(token);
   }
 
+  Future<bool> checkInternet() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      _toast.showMessage(
+          "Uygulamayı kullanabilmek için internet bağlantısı gereklidir");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    checkInternet();
     _eventViewModel = Provider.of<EventViewModel>(context);
     _featuredEventViewModel = Provider.of<FeaturedEventViewModel>(context);
     _userViewModel = Provider.of<UserViewModel>(context);
@@ -35,7 +50,23 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: appColor,
       appBar: buildAppBar(context),
-      body: Container(
+      body: buildBody(context),
+      bottomNavigationBar: buildBottomNavigationBar(context),
+    );
+  }
+
+  Widget buildBody(BuildContext context) {
+    if (_eventViewModel.state == EventState.EventLoadingState ||
+        _eventViewModel.state == EventState.InitialEventState ||
+        _featuredEventViewModel.state == EventState.EventLoadingState) {
+      return Center(
+          child: CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(iconColor)));
+    } else if (_eventViewModel.state == EventState.EventErrorState) {
+      return Center(
+          child: Icon(FontAwesomeIcons.times, color: Colors.white, size: 32));
+    } else {
+      return Container(
         padding: EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
@@ -43,15 +74,12 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 5,
             ),
-            _featuredEventViewModel.featuredEventList.length > 0
-                ? EventCard(
-                    event: _featuredEventViewModel.featuredEventList[0],
-                    containerWidth: double.infinity,
-                    imageWidth: double.infinity,
-                    containerHeight: height / 3,
-                    imageHeigt: height / 5)
-                : CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(iconColor)),
+            EventCard(
+                event: _featuredEventViewModel.featuredEventList[0],
+                containerWidth: double.infinity,
+                imageWidth: double.infinity,
+                containerHeight: height / 3,
+                imageHeigt: height / 5),
             SizedBox(
               height: 10,
             ),
@@ -74,9 +102,8 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: buildBottomNavigationBar(context),
-    );
+      );
+    }
   }
 
   Row buildNamesRow(context, title, showAll, isFeatured) {
@@ -100,7 +127,7 @@ class HomePage extends StatelessWidget {
                 Navigator.pushNamed(context, "/upcomingEvents");
               }
             },
-            color: appTransparentColor,
+            color: appYellow,
             child: Text(
               showAll,
               style: TextStyle(color: Colors.black, fontSize: 14),

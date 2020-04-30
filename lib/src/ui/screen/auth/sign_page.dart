@@ -1,10 +1,10 @@
 import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/model/user.dart';
+import 'package:eventapp/src/util/toast_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
 import 'package:provider/provider.dart';
-
-//TODO FIX THIS SHIT PAGE
+import 'package:connectivity/connectivity.dart';
 
 class SignPage extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _SignPageState extends State<SignPage> {
   bool isLoginForm = true;
 
   bool firstCheck = true;
-
+  ToastManager _toast = ToastManager();
   final _resetPassFormKey = GlobalKey<FormState>();
   String resetPassEmail;
 
@@ -50,8 +50,20 @@ class _SignPageState extends State<SignPage> {
     }
   }
 
+  Future<bool> checkInternet() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      _toast.showMessage(
+          "Uygulamayı kullanabilmek için internet bağlantısı gereklidir");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    checkInternet();
     _userViewModel = Provider.of<UserViewModel>(context);
     return Scaffold(
       backgroundColor: appColor,
@@ -98,7 +110,7 @@ class _SignPageState extends State<SignPage> {
                       },
                       style: TextStyle(color: textColor),
                       onChanged: (value) {},
-                      cursorColor: appTransparentColor,
+                      cursorColor: appYellow,
                       decoration: InputDecoration(
                           errorStyle: TextStyle(color: textColor),
                           hintText: "Email",
@@ -137,7 +149,7 @@ class _SignPageState extends State<SignPage> {
                       },
                       style: TextStyle(color: textColor),
                       onChanged: (value) {},
-                      cursorColor: appTransparentColor,
+                      cursorColor: appYellow,
                       obscureText: !_showPassword,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -222,11 +234,14 @@ class _SignPageState extends State<SignPage> {
                 color: textColor,
               ),
             ),
-            color: appTransparentColor,
+            color: appYellow,
             height: 40,
             minWidth: double.infinity,
-            onPressed: () {
-              _formSubmit();
+            onPressed: () async {
+              bool result = await checkInternet();
+              if (result) {
+                _formSubmit();
+              }
             }),
       );
     }
@@ -259,7 +274,7 @@ class _SignPageState extends State<SignPage> {
                     return null;
                   },
                   style: TextStyle(color: textColor),
-                  cursorColor: appTransparentColor,
+                  cursorColor: appYellow,
                   decoration: InputDecoration(
                       errorStyle: TextStyle(color: textColor),
                       hintText: "Email",
@@ -274,14 +289,18 @@ class _SignPageState extends State<SignPage> {
               FlatButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  color: appTransparentColor,
+                  color: appYellow,
                   child: Text(
                     "Gönder",
                     style: TextStyle(color: textColor, fontSize: 18),
                   ),
                   onPressed: () async {
-                    if (_resetPassFormKey.currentState.validate()) {
-                      await _userViewModel.resetPassword(resetPassEmail.trim());
+                    bool result = await checkInternet();
+                    if (result) {
+                      if (_resetPassFormKey.currentState.validate()) {
+                        await _userViewModel
+                            .resetPassword(resetPassEmail.trim());
+                      }
                     }
                   }),
             ],

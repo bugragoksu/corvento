@@ -128,7 +128,7 @@ class ContactPage extends StatelessWidget {
                       color: textColor,
                     ),
                   ),
-                  color: appTransparentColor,
+                  color: appYellow,
                   height: 40,
                   minWidth: double.infinity,
                   onPressed: () async {}),
@@ -180,7 +180,7 @@ class ContactPage extends StatelessWidget {
                       color: textColor,
                     ),
                   ),
-                  color: appTransparentColor,
+                  color: appYellow,
                   height: 40,
                   minWidth: 150,
                   onPressed: () async {

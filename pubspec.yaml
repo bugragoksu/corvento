@@ -24,6 +24,7 @@ dependencies:
   firebase_messaging: ^6.0.13
   share: ^0.6.3+6
   url_launcher: ^5.4.2
+  connectivity: ^0.4.8+2
 
 
 dev_dependencies:

@@ -23,7 +23,7 @@ class UpcomingEventCard extends StatelessWidget {
           elevation: 3,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-          color: appTransparentColor,
+          color: appYellow,
           child: Row(
             children: <Widget>[
               Container(

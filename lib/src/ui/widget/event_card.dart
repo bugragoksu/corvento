@@ -48,7 +48,7 @@ class EventCard extends StatelessWidget {
                     child: Text(
                       event.category.name,
                       style: TextStyle(
-                          color: appTransparentColor,
+                          color: appYellow,
                           fontWeight: FontWeight.bold),
                     ),
                   ),

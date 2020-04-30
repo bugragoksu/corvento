@@ -35,7 +35,7 @@ class ToastManager {
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_LONG,
-        backgroundColor: appTransparentColor,
+        backgroundColor: appYellow,
         textColor: Colors.white,
         fontSize: 16.0);
   }

@@ -60,7 +60,7 @@ class CategoryPage extends StatelessWidget {
                 Navigator.pushNamed(context, "/eventsbycategoryPage");
               },
               child: Card(
-                color: appTransparentColor,
+                color: appYellow,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
