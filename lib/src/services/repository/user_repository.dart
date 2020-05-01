@@ -29,4 +29,8 @@ class UserRepository {
   Future<void> sendFirebaseTokenToServer(String uid, String email) async {
     return await _server.sendFirebaseTokenToServer(uid, email);
   }
+
+  Future<bool> sendFeedback(String uid, String subject, String message) async {
+    return await _server.sendFeedback(uid, subject, message);
+  }
 }

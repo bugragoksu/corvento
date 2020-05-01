@@ -95,4 +95,16 @@ class UserViewModel with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> sendFeedback(String subject, String message) async {
+    try {
+      state = UserState.Busy;
+      await _userRepository.sendFeedback(user.uid, subject, message);
+      state = UserState.Idle;
+      return true;
+    } catch (e) {
+      state = UserState.Idle;
+      return false;
+    }
+  }
 }

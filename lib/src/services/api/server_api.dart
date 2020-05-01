@@ -150,4 +150,19 @@ class ServerAPI {
       return false;
     }
   }
+
+  Future<bool> sendFeedback(String uid, String subject, String message) async {
+    try {
+      var data = {"firebase_id": uid, "subject": subject, "message": message};
+      Response result = await Dio().post(addFormUrl, data: data);
+      if (result.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      _toast.localizedMessageFromFirebase(e.code);
+      return false;
+    }
+  }
 }

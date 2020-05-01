@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:eventapp/src/config/constant.dart';
 import 'package:eventapp/src/services/local/sharedpref_manager.dart';
@@ -19,7 +21,8 @@ class HomePage extends StatelessWidget {
   bool first = true;
   double height, width;
   ToastManager _toast = ToastManager();
-
+  Completer<void> _refreshIndicator = Completer<void>();
+  bool internetConnection = true;
   sendToken() async {
     FirebaseNotificationManager _notif = FirebaseNotificationManager();
     String token = await _notif.getToken();
@@ -31,15 +34,19 @@ class HomePage extends StatelessWidget {
     if (connectivityResult == ConnectivityResult.none) {
       _toast.showMessage(
           "Uygulamayı kullanabilmek için internet bağlantısı gereklidir");
-      return false;
+      internetConnection = false;
+      return internetConnection;
     } else {
-      return true;
+      internetConnection = true;
+      return internetConnection;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     checkInternet();
+    _refreshIndicator.complete();
+    _refreshIndicator = Completer<void>();
     _eventViewModel = Provider.of<EventViewModel>(context);
     _featuredEventViewModel = Provider.of<FeaturedEventViewModel>(context);
     _userViewModel = Provider.of<UserViewModel>(context);
@@ -50,25 +57,38 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: appColor,
       appBar: buildAppBar(context),
-      body: buildBody(context),
+      body: Container(
+        padding: EdgeInsets.all(8),
+        child: buildBody(context),
+      ),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );
   }
 
   Widget buildBody(BuildContext context) {
-    if (_eventViewModel.state == EventState.EventLoadingState ||
-        _eventViewModel.state == EventState.InitialEventState ||
-        _featuredEventViewModel.state == EventState.EventLoadingState) {
-      return Center(
-          child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation<Color>(iconColor)));
-    } else if (_eventViewModel.state == EventState.EventErrorState) {
-      return Center(
-          child: Icon(FontAwesomeIcons.times, color: Colors.white, size: 32));
+    if (!internetConnection) {
+      return RefreshIndicator(
+          color: appYellow,
+          onRefresh: () {
+            _eventViewModel.getAllEvents();
+            _featuredEventViewModel.getFeaturedEvents();
+            return _refreshIndicator.future;
+          },
+          child: ListView(children: <Widget>[
+            Text("İnternet bağlantınızı kontrol edip sayfayı yenileyiniz")
+          ]));
     } else {
-      return Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
+      if (_eventViewModel.state == EventState.EventLoadingState ||
+          _eventViewModel.state == EventState.InitialEventState ||
+          _featuredEventViewModel.state == EventState.EventLoadingState) {
+        return Center(
+            child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(iconColor)));
+      } else if (_eventViewModel.state == EventState.EventErrorState) {
+        return Center(
+            child: Icon(FontAwesomeIcons.times, color: Colors.white, size: 32));
+      } else {
+        return Column(
           children: <Widget>[
             buildNamesRow(context, "Öne Çıkan Etkinlik", "Tümünü Gör", 1),
             SizedBox(
@@ -101,8 +121,8 @@ class HomePage extends StatelessWidget {
                   }),
             ),
           ],
-        ),
-      );
+        );
+      }
     }
   }
 
