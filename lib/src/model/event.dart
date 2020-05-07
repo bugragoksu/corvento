@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class Event {
   final String id;
   final String title;
-  final String desc;
+  final String description;
 //  final String category;
   final DateTime date;
   final String eventUrl;
@@ -20,7 +20,7 @@ class Event {
   Event(
       {this.id,
       this.title,
-      this.desc,
+      this.description,
       this.category,
       this.date,
       this.eventUrl,
@@ -34,7 +34,7 @@ class Event {
     return Event(
         id: doc.documentID,
         title: data['title'] ?? '',
-        desc: data['desc'] ?? '',
+        description: data['description'] ?? '',
         category: data['category'] ?? '',
         date: data['date'].toDate() ?? DateTime.now(),
         eventUrl: data['eventUrl'] ?? '',
@@ -46,18 +46,19 @@ class Event {
   factory Event.fromJson(Map<String, dynamic> json) => Event(
         id: json["slug"] ?? '',
         title: json["title"] ?? '',
-        desc: json["desc"] ?? '',
+        description: json["description"] ?? '',
         imageUrl: json["image"] ?? '',
+        eventUrl: json["event_url"] ?? '',
         venue: json["venue"] ?? '',
         community: json['community'] ?? '',
-        date: DateTime.parse(json['date']) ?? DateTime.now(),
+        date: DateTime.parse(json['date']).toLocal() ?? DateTime.now(),
         category: Category.fromJson(json["category"]) ?? null,
         author: Author.fromJson(json["author"]) ?? null,
       );
 
   Map<String, dynamic> toJson() => {
         "title": title ?? '',
-        "desc": desc ?? '',
+        "description": description ?? '',
         "image": imageUrl ?? '',
         "venue": venue ?? '',
         "date": date ?? DateTime.now(),
@@ -66,7 +67,7 @@ class Event {
       };
 
   String getDate() {
-    initializeDateFormatting();
+    initializeDateFormatting('tr');
     return DateFormat.yMd('tr').format(this.date);
   }
 

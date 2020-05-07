@@ -48,7 +48,7 @@ class FirebaseAPI {
 
     events.forEach((event) {
       if (event.title.toLowerCase().contains(text) ||
-          event.desc.toLowerCase().contains(text)) {
+          event.description.toLowerCase().contains(text)) {
         result.add(event);
       }
     });
@@ -94,7 +94,7 @@ class FirebaseAPI {
 
       events.forEach((event) {
         if (event.title.toLowerCase().contains(text) ||
-            event.desc.toLowerCase().contains(text)) {
+            event.description.toLowerCase().contains(text)) {
           result.add(event);
         }
       });
@@ -169,10 +169,11 @@ class FirebaseAPI {
           .collection("users")
           .document(uid)
           .collection("notifications")
-          .where("isRead", isEqualTo: "0")
+          .where("isRead", isEqualTo: 0)
           .orderBy("date")
           .getDocuments()
           .then((notif) {
+        print(notif.documents);
         notif.documents.forEach((element) {
           if (element.data != null) {
             notifications.add(UserNotification.fromFirestore(element));

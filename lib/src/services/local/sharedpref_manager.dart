@@ -17,7 +17,7 @@ class SharedPrefManager {
         } else {
           events += ",$event";
         }
-        setEvent(event);
+        setEvent(events);
       }
     } catch (e) {
       print(e.toString());

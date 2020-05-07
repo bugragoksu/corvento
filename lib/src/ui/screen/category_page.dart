@@ -4,6 +4,7 @@ import 'package:eventapp/src/viewmodel/event_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:eventapp/src/util/util.dart';
 
 class CategoryPage extends StatelessWidget {
   CategoryViewModel _categoryViewModel;
@@ -65,7 +66,11 @@ class CategoryPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Icon(FontAwesomeIcons.terminal, color: textColor, size: 36),
+                    Icon(
+                        Util().switchIcon(
+                            _categoryViewModel.categoryList[index].name),
+                        color: textColor,
+                        size: 36),
                     SizedBox(
                       height: 20,
                     ),

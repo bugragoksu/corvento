@@ -33,10 +33,11 @@ class NotificationViewModel with ChangeNotifier {
       notificationList.clear();
       notificationList = await _repository.getNotifications(this.uid);
       state = NotificationState.NotificationLoadedState;
+      return notificationList;
     } catch (e) {
       state = NotificationState.NotificationErrorState;
+      return [];
     }
-    return notificationList;
   }
 
   Future<bool> deleteNotification(String documentID) async {

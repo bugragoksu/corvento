@@ -124,26 +124,32 @@ class ContactPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: Text(
-                      "Gönder",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: textColor,
-                      ),
-                    ),
-                    color: appYellow,
-                    height: 40,
-                    minWidth: double.infinity,
-                    onPressed: () async {
-                      if (_feedbackFormKey.currentState.validate()) {
-                        await _userViewModel.sendFeedback(subject, message);
-                      }
-                    }),
-              ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: _userViewModel.state != UserState.Busy
+                      ? MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: Text(
+                            "Gönder",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: textColor,
+                            ),
+                          ),
+                          color: appYellow,
+                          height: 40,
+                          minWidth: double.infinity,
+                          onPressed: () async {
+                            if (_feedbackFormKey.currentState.validate()) {
+                              await _userViewModel.sendFeedback(
+                                  subject, message);
+                            }
+                          })
+                      : Center(
+                          child: CircularProgressIndicator(
+                              valueColor:
+                                  new AlwaysStoppedAnimation<Color>(iconColor)),
+                        )),
               Divider(
                 color: iconColor,
               ),

@@ -32,6 +32,7 @@ class FirebaseAuthService {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      userRegisterToDatabase(result.user);
       _api.userRegisterToDatabase(result.user);
       _toast.localizedMessageFromFirebase("Create User Successful");
       return User.fromFirebaseUser(result.user);
@@ -59,6 +60,23 @@ class FirebaseAuthService {
       _toast.localizedMessageFromFirebase("Success Reset Password");
     } catch (error) {
       _toast.localizedMessageFromFirebase(error.code);
+    }
+  }
+
+  Future<bool> userRegisterToDatabase(FirebaseUser user) async {
+    try {
+      var data = {
+        "uid": user.uid,
+        "email": user.email,
+        "name": '',
+        "profilePic": '',
+        'createdDate': DateTime.now()
+      };
+      await _db.collection('users').document(user.uid).setData(data);
+      return true;
+    } catch (e) {
+      _toast.localizedMessageFromFirebase(e.code);
+      return false;
     }
   }
 }

@@ -151,13 +151,17 @@ class ServerAPI {
     }
   }
 
-  Future<bool> sendFeedback(String uid, String subject, String message) async {
+  Future<bool> sendFeedback(
+      String email, String subject, String message) async {
     try {
-      var data = {"firebase_id": uid, "subject": subject, "message": message};
+      var data = {"email": email, "subject": subject, "message": message};
       Response result = await Dio().post(addFormUrl, data: data);
-      if (result.statusCode == 200) {
+      if (result.statusCode == 201 || result.statusCode == 200) {
+        _toast.showMessage(
+            "Mesajınızı aldık. En kısa sürede sizinle iletişime geçeceğiz");
         return true;
       } else {
+        _toast.localizedMessageFromFirebase("Bir şeyler ters gitti");
         return false;
       }
     } catch (e) {
