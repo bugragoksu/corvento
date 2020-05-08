@@ -28,12 +28,12 @@ class FirebaseAuthService {
   }
 
   Future<User> createUserWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password, String firebaseToken) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       userRegisterToDatabase(result.user);
-      _api.userRegisterToDatabase(result.user);
+      _api.userRegisterToDatabase(result.user, firebaseToken);
       _toast.localizedMessageFromFirebase("Create User Successful");
       return User.fromFirebaseUser(result.user);
     } catch (e) {

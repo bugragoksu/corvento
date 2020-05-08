@@ -14,8 +14,8 @@ class UserRepository {
   }
 
   Future<User> createUserWithEmailAndPassword(
-      String email, String password) async {
-    return await _api.createUserWithEmailAndPassword(email, password);
+      String email, String password,String firebaseToken) async {
+    return await _api.createUserWithEmailAndPassword(email, password,firebaseToken);
   }
 
   Future<User> signInWithEmailAndPassword(String email, String password) async {

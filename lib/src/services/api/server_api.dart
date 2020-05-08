@@ -126,11 +126,13 @@ class ServerAPI {
   }
 
   //user
-  Future<bool> userRegisterToDatabase(FirebaseUser user) async {
+  Future<bool> userRegisterToDatabase(
+      FirebaseUser user, String firebaseToken) async {
     try {
       var data = {
         "firebase_id": user.uid,
         "email": user.email,
+        'firebase_token': firebaseToken
       };
       Response result = await Dio().post(registerUrl, data: data);
       return true;

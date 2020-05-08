@@ -18,16 +18,10 @@ class HomePage extends StatelessWidget {
   FeaturedEventViewModel _featuredEventViewModel;
   UserViewModel _userViewModel;
   SharedPrefManager pf = SharedPrefManager();
-  bool first = true;
   double height, width;
   ToastManager _toast = ToastManager();
   Completer<void> _refreshIndicator = Completer<void>();
   bool internetConnection = true;
-  sendToken() async {
-    FirebaseNotificationManager _notif = FirebaseNotificationManager();
-    String token = await _notif.getToken();
-    _userViewModel.sendFirebaseTokenToServer(token);
-  }
 
   Future<bool> checkInternet() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -52,8 +46,6 @@ class HomePage extends StatelessWidget {
     _userViewModel = Provider.of<UserViewModel>(context);
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    if (first) sendToken();
-    first = false;
     return Scaffold(
       backgroundColor: appColor,
       appBar: buildAppBar(context),
