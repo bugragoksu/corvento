@@ -43,12 +43,12 @@ class _EventDetailPageState extends State<EventDetailPage> {
     setState(() {});
   }
 
-  launchURL() async {
-    String url = widget.event.eventUrl;
+  launchURL(url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      _toast.showMessage('Ops. Bi şeyler ters gitti');
+      _toast.showMessage(
+          'Ops. Bi şeyler ters gitti. Daha sonra tekrar deneyiniz');
     }
   }
 
@@ -321,6 +321,9 @@ class _EventDetailPageState extends State<EventDetailPage> {
                           children: <Widget>[
                             Html(
                               data: widget.event.description,
+                              onLinkTap: (String link) {
+                                launchURL(link);
+                              },
                             ),
                           ],
                         ),
@@ -344,7 +347,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
                             height: 40,
                             minWidth: double.infinity,
                             onPressed: () {
-                              launchURL();
+                              launchURL(widget.event.eventUrl);
                             },
                           ),
                         ),

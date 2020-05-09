@@ -60,31 +60,34 @@ class CategoryPage extends StatelessWidget {
                     _categoryViewModel.categoryList[index].id);
                 Navigator.pushNamed(context, "/eventsbycategoryPage");
               },
-              child: Card(
-                color: appYellow,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                        Util().switchIcon(
-                            _categoryViewModel.categoryList[index].name),
-                        color: textColor,
-                        size: 36),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      _categoryViewModel.categoryList[index].name,
-                      style: TextStyle(color: textColor, fontSize: 24),
-                    )
-                  ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  color: appYellow,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                          Util().switchIcon(
+                              _categoryViewModel.categoryList[index].name),
+                          color: textColor,
+                          size: 36),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        _categoryViewModel.categoryList[index].name,
+                        style: TextStyle(color: textColor, fontSize: 24),
+                      )
+                    ],
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 5,
+                  margin: EdgeInsets.all(10),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                elevation: 5,
-                margin: EdgeInsets.all(10),
               ),
             );
           }),

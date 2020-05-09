@@ -1,5 +1,6 @@
 import 'package:eventapp/src/config/api_settings.dart';
 import 'package:eventapp/src/config/constant.dart';
+import 'package:eventapp/src/ui/screen/webview_page.dart';
 import 'package:eventapp/src/util/toast_manager.dart';
 import 'package:eventapp/src/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -171,7 +172,14 @@ class ContactPage extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      launchURL(webUrl);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WebViewPage(
+                                  url: webUrl,
+                                  appBarTitle: 'Corvento',
+                                )),
+                      );
                     },
                     icon: Icon(FontAwesomeIcons.globe, color: iconColor),
                   ),
@@ -190,7 +198,16 @@ class ContactPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WebViewPage(
+                                    url: privacyUrl,
+                                    appBarTitle: 'Privacy Policy',
+                                  )),
+                        );
+                      },
                       child: Text(
                         "Privacy Policy",
                         style: TextStyle(
@@ -201,7 +218,16 @@ class ContactPage extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WebViewPage(
+                                    url: termsUrl,
+                                    appBarTitle: 'Terms & Conditions',
+                                  )),
+                        );
+                      },
                       child: Text(
                         "Terms & Conditions",
                         style: TextStyle(
