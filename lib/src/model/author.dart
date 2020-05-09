@@ -16,12 +16,12 @@ class Author {
   });
 
   factory Author.fromJson(Map<String, dynamic> json) => Author(
-        email: json["email"] == null ? null : json["email"],
-        firstName: json["first_name"] == null ? null : json["first_name"],
-        lastName: json["last_name"] == null ? null : json["last_name"],
-        gender: json["gender"] == null ? null : json["gender"],
-        uuid: json["uuid"] == null ? null : json["uuid"],
-        image: json["image"],
+        email: json["email"] ?? '',
+        firstName: json["first_name"]??'',
+        lastName: json["last_name"]??'',
+        gender: json["gender"] ?? '',
+        uuid: json["uuid"] ??'',
+        image: json["image"]??'',
       );
 
   Map<String, dynamic> toJson() => {

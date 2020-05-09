@@ -52,8 +52,8 @@ class Event {
         venue: json["venue"] ?? '',
         community: json['community'] ?? '',
         date: DateTime.parse(json['date']).toLocal() ?? DateTime.now(),
-        category: Category.fromJson(json["category"]) ?? null,
-        author: Author.fromJson(json["author"]) ?? null,
+        category: Category.fromJson(json["category"]??{}) ?? null,
+        author: Author.fromJson(json["author"]??{}) ?? null,
       );
 
   Map<String, dynamic> toJson() => {
