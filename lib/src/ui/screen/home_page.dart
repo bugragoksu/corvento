@@ -128,7 +128,6 @@ class HomePage extends StatelessWidget {
         Spacer(),
         Container(
           height: 20,
-          width: 110,
           child: FlatButton(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),

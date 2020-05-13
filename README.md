@@ -1,16 +1,25 @@
-# Evento
+<p align="center"><img height="125px" width="125px" src="assets/img/logo.png" alt="Corvento"/></p>
 
-A new Flutter project.
 
-## Getting Started
+# Corvento
 
-This project is a starting point for a Flutter application.
+Meeting address of online events
 
-A few resources to get you started if this is your first Flutter project:
+# Download 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<a href='https://play.google.com/store/apps/details?id=com.bugragoksu.corvento'><img alt='Get it on Google Play' width="300" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Screenshots
+<table>
+    <tr>
+        <td><img src="screenshot/0.png" width="300"></td>
+        <td><img src="screenshot/1.png" width="300"></td>
+        <td><img src="screenshot/2.png" width="300"></td>
+    </tr>
+      <tr>
+        <td><img src="screenshot/3.png" width="300"></td>
+        <td><img src="screenshot/4.png" width="300"></td>
+        <td><img src="screenshot/5.png" width="300"></td>
+    </tr>
+</table>

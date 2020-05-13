@@ -15,8 +15,10 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(
-    //     SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
     FirebaseNotificationManager _firebaseMessaging =
         FirebaseNotificationManager();
     return MultiProvider(
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Evento',
+        title: 'Corvento',
         theme: ThemeData(
             primarySwatch: Colors.blue,
             textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Gilroy')),
