@@ -1,7 +1,9 @@
-<p align="center"><img height="125px" width="125px" src="assets/img/logo.png" alt="Corvento"/></p>
+<p align="center"><img height="125px" width="125px" src="assets/img/logo_hor.png" alt="Corvento"/></p>
 
 
 # Corvento
+[![Made-with-Flutter](https://img.shields.io/badge/Made%20with-Flutter-5fc9f8.svg)](https://flutter.dev/)
+[![Made-with-Dart](https://img.shields.io/badge/Made%20with-Dart-13589c.svg)](https://dart.dev/)
 
 Meeting address of online events
 
