@@ -1,4 +1,4 @@
-<p align="center"><img height="125px" width="125px" src="assets/img/logo_hor.png" alt="Corvento"/></p>
+<p align="center"><img src="assets/img/logo_hor.png" alt="Corvento"/></p>
 
 
 # Corvento
