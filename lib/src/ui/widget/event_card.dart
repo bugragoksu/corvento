@@ -43,43 +43,55 @@ class EventCard extends StatelessWidget {
                           fit: BoxFit.fill,
                         )),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      event.category.name,
-                      style: TextStyle(
-                          color: appYellow,
-                          fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:10.0),
+                      child: Text(
+                        event.category.name,
+                        style: TextStyle(
+                            color: appYellow, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Text(
-                      event.title,
-                      style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: SingleChildScrollView(
+                        controller: ScrollController(),
+                        child: Text(
+                          event.title,
+                          style: TextStyle(
+                              color: textColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                      ),
                     ),
                   ),
                   Spacer(),
                   Row(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5.0, bottom: 5),
-                        child: Text(
-                          event.community,
-                          style: TextStyle(
-                            color: Colors.grey,
+                      Expanded(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            event.community,
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, bottom: 5),
-                        child: Text(
-                          event.getDayNumber() + " " + event.getMonthName(),
-                          style: TextStyle(
-                            color: Colors.grey,
+                      Expanded(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(left: 10.0, bottom: 10),
+                          child: Text(
+                            event.getDayNumber() + " " + event.getMonthName(),
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                       ),

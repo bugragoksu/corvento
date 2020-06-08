@@ -75,7 +75,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
         child: Stack(
           children: <Widget>[
             Container(
-              height: 250,
+              height: height / 3,
               child: Image.network(
                 widget.event.imageUrl,
                 fit: BoxFit.fill,
@@ -152,209 +152,221 @@ class _EventDetailPageState extends State<EventDetailPage> {
               ),
             ),
             SafeArea(
-                child: Column(children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(children: [
-                  MaterialButton(
-                    padding: const EdgeInsets.all(8.0),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: Icon(FontAwesomeIcons.arrowLeft),
-                    color: appColor,
-                    textColor: textColor,
-                    minWidth: 0,
-                    height: 40,
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ]),
-              ),
-              SizedBox(
-                height: 125,
-              ),
-              Container(
-                  padding: EdgeInsets.only(left: 10),
-                  height: height / 1.5,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: appColor),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Text(
-                          widget.event.title,
-                          style: TextStyle(
-                              color: textColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  child: Column(children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(children: [
+                        MaterialButton(
+                          padding: const EdgeInsets.all(8.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: Icon(FontAwesomeIcons.arrowLeft),
+                          color: appColor,
+                          textColor: textColor,
+                          minWidth: 0,
+                          height: 40,
+                          onPressed: () => Navigator.pop(context),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "Düzenleyen :",
-                            style: TextStyle(
-                              color: textColor,
-                              fontSize: 16,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            widget.event.community,
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          LimitedBox(
-                            child: Card(
-                              elevation: 2,
-                              color: appColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      FontAwesomeIcons.calendar,
-                                      color: iconColor,
-                                      size: 16,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(widget.event.getDate(),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: textColor,
-                                        ),
-                                        overflow: TextOverflow.ellipsis)
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          LimitedBox(
-                            child: Card(
-                              elevation: 2,
-                              color: appColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      FontAwesomeIcons.clock,
-                                      color: iconColor,
-                                      size: 16,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(widget.event.getTime(),
-                                        style: TextStyle(
-                                            fontSize: 16, color: textColor),
-                                        overflow: TextOverflow.ellipsis),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          LimitedBox(
-                            child: Card(
-                              elevation: 2,
-                              color: appColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      FontAwesomeIcons.mapMarkerAlt,
-                                      color: iconColor,
-                                      size: 16,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(widget.event.venue,
-                                        style: TextStyle(
-                                            fontSize: 16, color: textColor),
-                                        overflow: TextOverflow.ellipsis),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text("Etkinlik Detayı",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: textColor,
-                          ),
-                          overflow: TextOverflow.ellipsis),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height / 3.5,
-                        padding: EdgeInsets.all(10),
-                        child: ListView(
+                      ]),
+                    ),
+                    SizedBox(
+                      height: height / 6,
+                    ),
+                    Container(
+                        padding: EdgeInsets.only(left: 10),
+                        height: height / 1.25,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: appColor),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Html(
-                              data: widget.event.description,
-                              onLinkTap: (String link) {
-                                launchURL(link);
-                              },
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: Text(
+                                  widget.event.title,
+                                  style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                  overflow: TextOverflow.visible,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: <Widget>[
+                                  Text(
+                                    "Düzenleyen :",
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 16,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    widget.event.community,
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                LimitedBox(
+                                  child: Card(
+                                    elevation: 2,
+                                    color: appColor,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            FontAwesomeIcons.calendar,
+                                            color: iconColor,
+                                            size: 16,
+                                          ),
+                                          SizedBox(width: 5),
+                                          Text(widget.event.getDate(),
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: textColor,
+                                              ),
+                                              overflow: TextOverflow.ellipsis)
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                LimitedBox(
+                                  child: Card(
+                                    elevation: 2,
+                                    color: appColor,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            FontAwesomeIcons.clock,
+                                            color: iconColor,
+                                            size: 16,
+                                          ),
+                                          SizedBox(width: 5),
+                                          Text(widget.event.getTime(),
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: textColor),
+                                              overflow: TextOverflow.ellipsis),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                LimitedBox(
+                                  child: Card(
+                                    elevation: 2,
+                                    color: appColor,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            FontAwesomeIcons.mapMarkerAlt,
+                                            color: iconColor,
+                                            size: 16,
+                                          ),
+                                          SizedBox(width: 5),
+                                          Text(widget.event.venue,
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: textColor),
+                                              overflow: TextOverflow.ellipsis),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text("Etkinlik Detayı",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: textColor,
+                                ),
+                                overflow: TextOverflow.ellipsis),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 3.5,
+                              padding: EdgeInsets.all(10),
+                              child: ListView(
+                                children: <Widget>[
+                                  Html(
+                                    data: widget.event.description,
+                                    onLinkTap: (String link) {
+                                      launchURL(link);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 10.0, right: 10),
+                                child: Center(
+                                  child: MaterialButton(
+                                    padding: const EdgeInsets.all(.0),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    child: Text(
+                                      "Etkinlik Sitesi",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                    color: appYellow,
+                                    height: 40,
+                                    minWidth: double.infinity,
+                                    onPressed: () {
+                                      launchURL(widget.event.eventUrl);
+                                    },
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
-                        ),
-                      ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0, right: 10),
-                        child: Center(
-                          child: MaterialButton(
-                            padding: const EdgeInsets.all(.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            child: Text(
-                              "Etkinlik Sitesi",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: textColor,
-                              ),
-                            ),
-                            color: appYellow,
-                            height: 40,
-                            minWidth: double.infinity,
-                            onPressed: () {
-                              launchURL(widget.event.eventUrl);
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-            ]))
+                        )),
+                  ])),
+            )
           ],
         ),
       ),

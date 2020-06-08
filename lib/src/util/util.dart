@@ -9,7 +9,7 @@ class Util {
         selectedIcon = FontAwesomeIcons.terminal;
         break;
       case "Girişimcilik":
-        selectedIcon = FontAwesomeIcons.building;
+        selectedIcon = FontAwesomeIcons.chartLine;
         break;
       case "Sağlık":
         selectedIcon = FontAwesomeIcons.heartbeat;
